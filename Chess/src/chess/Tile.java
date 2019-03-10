@@ -21,6 +21,9 @@ public class Tile {
 		color = assignColor(translateIntToLetter(letter_rank), number_rank);
 	}
 	
+	/*I might have to change these following methods in order to fix the mapping,
+	 * or maybe it is in the for loop that creates the board in the Board class*/
+    
 	//This method maps the integer coordinate to a letter, return '?' on error.
 	public String translateIntToLetter(int let)
 	{
@@ -33,6 +36,20 @@ public class Tile {
 		else if (let == 6){return("g");}
 		else if (let == 7){return("h");}
 		else{return("?");}
+	}
+	
+	//This method maps the letter coordinate to an integer
+	public static int translateLetterToInt(String num)
+	{
+		if (num.equals("a")){return(0);}
+		else if (num.equals("b")){return(1);}
+		else if (num.equals("c")){return(2);}
+		else if (num.equals("d")){return(3);}
+		else if (num.equals("e")){return(4);}
+		else if (num.equals("f")){return(5);}
+		else if (num.equals("g")){return(6);}
+		else if (num.equals("h")){return(7);}
+		else{return(-1);}
 	}
 	
 	//This method determines what color each tile is based on board coordinates

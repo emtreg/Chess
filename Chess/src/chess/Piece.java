@@ -5,16 +5,18 @@ package chess;
 public abstract class Piece {
 	
 	public Tile currentTile;
-	public String color; 
+	public String color;
+	public String tag; //This is what is shown on the board, (ex. wp for White Pawn)
 	
-	public Piece(Tile currentTile)
+	public Piece(Tile currentTile, String color)
 	{
 		this.currentTile = currentTile;
+		this.color = color;
 	}
 	
 	public abstract boolean isValidPath(Tile start, Tile end);
 	
-	public abstract void move();
+	public abstract void move(Tile end);
 	
 	public abstract Tile[] possibleMove();
 

@@ -20,10 +20,7 @@ public class Tile {
 		this.number_rank = number_rank;
 		color = assignColor(translateIntToLetter(letter_rank), number_rank);
 	}
-	
-	/*I might have to change these following methods in order to fix the mapping,
-	 * or maybe it is in the for loop that creates the board in the Board class*/
-    
+	   
 	//This method maps the integer coordinate to a letter, return '?' on error.
 	public String translateIntToLetter(int let)
 	{
@@ -81,6 +78,7 @@ public class Tile {
 	}
 	
 	//These are setter and getter methods for the occupying chess piece
+	// (I think I can delete these actually because occupying_piece is public)
 	public void setOccupyingPiece(Piece occupying_piece)
 	{
 		this.occupying_piece = occupying_piece;

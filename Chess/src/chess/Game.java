@@ -32,19 +32,24 @@ public class Game {
 				input = input.trim();
 				input = input.replaceAll(" ", "");
 				
+				/* In order to fix the mapping I had to pass the coordinates to the chess
+				 * board flipped, so instead of letter, number I passed them as 
+				 * number, letter. Then I had to subtract 1 from the number value and then
+				 * set it to be 7 - itself. */
+				
 				int w_start_let = Tile.translateLetterToInt(input.substring(0, 1));
 				int w_start_num = Integer.parseInt(input.substring(1, 2));
+				w_start_num = 7 - (w_start_num-1);
 				int w_end_let = Tile.translateLetterToInt(input.substring(2, 3));
 				int w_end_num = Integer.parseInt(input.substring(3, 4));
-				
-				//This is just something I was using to debug
-				//Board.chess_board[w_start_let][w_start_num].occupying_piece.tag = "XD";
-				
-				//This is what would initiate a move when the coordinates are properly mapped. 
-				//Board.chess_board[w_start_let][w_start_num].occupying_piece.move(Board.chess_board[w_end_let][w_end_num]);
+				w_end_num = 7 - (w_end_num-1);
+				 
+				Board.chess_board[w_start_num][w_start_let].occupying_piece.move(Board.chess_board[w_end_num][w_end_let]);
+				//Add code here that checks if the end piece isOccupied and adds that piece to the graveyard
+				Board.chess_board[w_end_num][w_end_let].occupying_piece = Board.chess_board[w_start_num][w_start_let].occupying_piece;
+				Board.chess_board[w_start_num][w_start_let].occupying_piece = null;
 
 				turn++;
-				
 				Board.makeBoard();
 			}
 			else
@@ -55,6 +60,18 @@ public class Game {
 				input = input.trim();
 				input = input.replaceAll(" ", "");
 
+				int b_start_let = Tile.translateLetterToInt(input.substring(0, 1));
+				int b_start_num = Integer.parseInt(input.substring(1, 2));
+				b_start_num = 7 - (b_start_num-1);
+				int b_end_let = Tile.translateLetterToInt(input.substring(2, 3));
+				int b_end_num = Integer.parseInt(input.substring(3, 4));
+				b_end_num = 7 - (b_end_num-1);
+				
+				Board.chess_board[b_start_num][b_start_let].occupying_piece.move(Board.chess_board[b_end_num][b_end_let]);
+				//Add code here that checks if the end piece isOccupied and adds that piece to the graveyard
+				Board.chess_board[b_end_num][b_end_let].occupying_piece = Board.chess_board[b_start_num][b_start_let].occupying_piece;
+				Board.chess_board[b_start_num][b_start_let].occupying_piece = null;
+				
 				turn++;
 				
 				Board.makeBoard();

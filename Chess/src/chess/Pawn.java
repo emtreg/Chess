@@ -23,13 +23,13 @@ public class Pawn extends Piece{
 	
 	public void move(Tile end)
 	{
-		int end_x = end.letter_rank;
-		int end_y = end.number_rank;
-		int start_x = currentTile.letter_rank;
-		int start_y = currentTile.number_rank;
+		int end_let = end.letter_rank;
+		int end_num = end.number_rank;
+		int start_let = currentTile.letter_rank;
+		int start_num = currentTile.number_rank;
 		
-		Board.chess_board[end_x][end_y].isOccupied = true;
-		Board.chess_board[start_x][start_y].isOccupied = false;
+		Board.chess_board[end_let][end_num].isOccupied = true;
+		Board.chess_board[start_let][start_num].isOccupied = false;
 		
 		currentTile = end;
 	}

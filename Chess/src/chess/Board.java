@@ -8,9 +8,6 @@ public class Board {
 	
 	static Tile chess_board[][] = new Tile[8][8];
 	
-	/* I think what I will have to do to fix the mapping is change the coordinates in
-	 * which I create and print the array in the following loops. */
-	
 	public static void initialBoard()
 	{
 		for (int i = 0; i < 8; i++)
@@ -94,7 +91,6 @@ public class Board {
 		{
 			for (int j = 0; j < 8; j++)
 			{
-				 //chess_board[i][j] = new Tile(i, j);
 				 if (chess_board[i][j].color.equals("white"))
 				 {
 					 if (chess_board[i][j].isOccupied == true)
@@ -112,6 +108,7 @@ public class Board {
 					 else {System.out.print("## ");}
 				 }
 			}
+
 			System.out.print(" " + (8-i));
 			System.out.print("\n");
 		}

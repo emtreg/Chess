@@ -3,6 +3,7 @@ package chess;
 public class Pawn extends Piece{
 	
 	String pieceType = "pawn";
+	boolean firstMove = true;
 	
 	public Pawn(Tile currentTile, String color)
 	{
@@ -23,19 +24,43 @@ public class Pawn extends Piece{
 	
 	public void move(Tile end)
 	{
-		int end_let = end.letter_rank;
-		int end_num = end.number_rank;
-		int start_let = currentTile.letter_rank;
-		int start_num = currentTile.number_rank;
+		int end_x = end.letter_rank;
+		int end_y = end.number_rank;
+		int start_x = currentTile.letter_rank;
+		int start_y = currentTile.number_rank;
 		
-		Board.chess_board[end_let][end_num].isOccupied = true;
-		Board.chess_board[start_let][start_num].isOccupied = false;
-		
-		currentTile = end;
+		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
+		{
+			Board.chess_board[end_x][end_y].isOccupied = true;
+			Board.chess_board[start_x][start_y].isOccupied = false;
+			
+			currentTile = end;
+		}
 	}
 	
 	public boolean isValidPath(Tile start, Tile end)
 	{
+		if ((firstMove == true) && color.equals("white") && ((start.letter_rank - end.letter_rank) == 2) && end.isOccupied == false)
+		{
+			firstMove = false;
+			return true;
+		}
+		if ((firstMove == true) && (color.equals("white") == false) && ((end.letter_rank - start.letter_rank) == 2) && end.isOccupied == false)
+		{
+			firstMove = false;
+			return true;
+		}
+		if ((firstMove == false) && color.equals("white") && ((start.letter_rank - end.letter_rank) == 1) && end.isOccupied == false)
+		{
+			return true;
+		}
+		if ((firstMove == true) && (color.equals("white") == false) && ((end.letter_rank - start.letter_rank) == 1) && end.isOccupied == false)
+		{
+			firstMove = false;
+			return true;
+		}
+		
+		//code diagonal move
 		return true;
 	}
 

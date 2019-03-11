@@ -5,18 +5,17 @@ public class Bishop extends Piece {
 	static final int maxMoves = 13;
 	
 	String pieceType = "bishop";
-	String tag;
 
 	public Bishop(Tile currentTile, String color) {
 		super(currentTile, color);
 		
 		if(color.equals("white")) {
 			
-			tag = "wR";
+			tag = "wB";
 			
 		} else {
 			
-			tag = "bR";
+			tag = "bB";
 		}
 	}
 	
@@ -36,6 +35,7 @@ public class Bishop extends Piece {
 					
 					currentTile.isOccupied = false;
 					currentTile = end;
+					break;
 				}
 			}
 		}		

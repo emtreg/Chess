@@ -87,11 +87,13 @@ public class Knight extends Piece{
 		int x = currentTile.letter_rank;
 		int y = currentTile.number_rank;
 		int count = 0;
+		int file = currentTile.letter_rank;
+		int rank = currentTile.number_rank;
 		
 		if((x+1) < 8 && (y+2) < 8) {	
 			
-			int file = x+1;
-			int rank = y+2;
+			file = x+1;
+			rank = y+2;
 			
 			checkTile(file, rank, count, reachableTiles);
 	
@@ -99,8 +101,8 @@ public class Knight extends Piece{
 		
 		if((x-1) >= 0 && (y+2) < 8) {
 			
-			int file = x-1;
-			int rank = y+2;
+			file = x-1;
+			rank = y+2;
 			
 			checkTile(file, rank, count, reachableTiles);
 				
@@ -108,48 +110,48 @@ public class Knight extends Piece{
 		
 		if((x-1) >= 0 && (y-2) >= 0) {	
 			
-			int file = x-1;
-			int rank = y-2;
+			file = x-1;
+			rank = y-2;
 			
 			checkTile(file, rank, count, reachableTiles);	
 		}
 		
 		if((x+1) < 8 && (y-2) >= 0) {	
 			
-			int file = x+1;
-			int rank = y-2;
+			file = x+1;
+			rank = y-2;
 			
 			checkTile(file, rank, count, reachableTiles);	
 		}
 		
 		if((x+2) < 8 && (y+1) < 8) {	
 			
-			int file = x+2;
-			int rank = y+1;
+			file = x+2;
+			rank = y+1;
 			
 			checkTile(file, rank, count, reachableTiles);		
 		}
 		
 		if((x-2) >= 0 && (y-1) >= 0) {
 			
-			int file = x-2;
-			int rank = y-1;
+			file = x-2;
+			rank = y-1;
 			
 			checkTile(file, rank, count, reachableTiles);
 		}
 		
 		if((x-2) >= 0 && (y+1) < 8) { 
 			
-			int file = x-2;
-			int rank = y+1;
+			file = x-2;
+			rank = y+1;
 			
 			checkTile(file, rank, count, reachableTiles);
 		}
 		
 		if((x+2) < 8 && (y-1) >= 0) {
 			
-			int file = x+2;
-			int rank = y-1;
+			file = x+2;
+			rank = y-1;
 			
 			checkTile(file, rank, count, reachableTiles);
 		}

@@ -58,9 +58,7 @@ public class King extends Piece{
 				|| startLet - endLet == 1 && startNum == endNum
 				|| endLet - startLet == 1 && startNum == endNum
 				|| startLet - endLet == 1 && endNum - startNum == 1
-				|| endLet - startLet == 1 && startNum - endNum == 1
-				|| startLet - endLet == 2 && startNum == endNum) {
-			
+				|| endLet - startLet == 1 && startNum - endNum == 1) {
 					
 			return true;
 		}

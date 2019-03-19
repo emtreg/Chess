@@ -3,6 +3,7 @@ package chess;
 public class Rook extends Piece {
 	
 	String pieceType = "rook";
+	boolean first_move = true;
 	
 	public Rook(Tile currentTile, String color)
 	{
@@ -31,6 +32,7 @@ public class Rook extends Piece {
 				{
 					currentTile.isOccupied = false;
 					currentTile = end;
+					first_move = false;
 					break;
 				}
 			}

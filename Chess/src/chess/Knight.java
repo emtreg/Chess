@@ -28,6 +28,7 @@ public class Knight extends Piece{
 				if (end.equals(moves[i])) {			
 					currentTile.isOccupied = false;
 					currentTile = end;
+					break;
 				}
 			}
 		}		

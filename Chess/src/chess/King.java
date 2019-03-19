@@ -23,6 +23,7 @@ public class King extends Piece{
 	public void move(Tile end) {
 		
 		if (isValidPath(currentTile, end) == true) {
+						
 			Tile moves[] = possibleMove();
 			
 			for (int i = 0; i < moves.length; i++) {
@@ -30,6 +31,8 @@ public class King extends Piece{
 				if (end.equals(moves[i])) {			
 					currentTile.isOccupied = false;
 					currentTile = end;
+					first_move = false;
+					break;
 				}
 			}
 		}			

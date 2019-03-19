@@ -28,6 +28,7 @@ public class Queen extends Piece{
 				if (end.equals(moves[i])) {			
 					currentTile.isOccupied = false;
 					currentTile = end;
+					break;
 				}
 			}
 		}		
@@ -133,12 +134,12 @@ public class Queen extends Piece{
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
 					break;			
 				} else {					
-					possibleMoves[cnt] = Board.chess_board[x][y];
+					reachableTiles[cnt] = Board.chess_board[x][y];
 					cnt++;
 					break;
 				}			
 			} else {				
-				possibleMoves[cnt] = Board.chess_board[x][y];
+				reachableTiles[cnt] = Board.chess_board[x][y];
 				cnt++;
 			}			
 		}
@@ -149,12 +150,12 @@ public class Queen extends Piece{
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
 					break;			
 				} else {					
-					possibleMoves[cnt] = Board.chess_board[x][y];
+					reachableTiles[cnt] = Board.chess_board[x][y];
 					cnt++;
 					break;
 				}			
 			} else {				
-				possibleMoves[cnt] = Board.chess_board[x][y];
+				reachableTiles[cnt] = Board.chess_board[x][y];
 				cnt++;
 			}			
 		}
@@ -165,12 +166,12 @@ public class Queen extends Piece{
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
 					break;			
 				} else {					
-					possibleMoves[cnt] = Board.chess_board[x][y];
+					reachableTiles[cnt] = Board.chess_board[x][y];
 					cnt++;
 					break;
 				}			
 			} else {				
-				possibleMoves[cnt] = Board.chess_board[x][y];
+				reachableTiles[cnt] = Board.chess_board[x][y];
 				cnt++;
 			}			
 		}
@@ -181,12 +182,12 @@ public class Queen extends Piece{
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
 					break;			
 				} else {					
-					possibleMoves[cnt] = Board.chess_board[x][y];
+					reachableTiles[cnt] = Board.chess_board[x][y];
 					cnt++;
 					break;
 				}			
 			} else {				
-				possibleMoves[cnt] = Board.chess_board[x][y];
+				reachableTiles[cnt] = Board.chess_board[x][y];
 				cnt++;
 			}			
 		}

@@ -7,8 +7,6 @@ public abstract class Piece {
 	public Tile currentTile;
 	public String color;
 	public String tag; //This is what is shown on the board, (ex. wp for White Pawn)
-	public String pieceType;
-	public boolean first_move;
 	
 	public Piece(Tile currentTile, String color)
 	{

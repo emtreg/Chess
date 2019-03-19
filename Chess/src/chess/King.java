@@ -21,16 +21,24 @@ public class King extends Piece{
 		
 		if (isValidPath(currentTile, end) == true) {
 			
-			Tile moves[] = possibleMove();
-			for (int i = 0; i < moves.length; i++)
-			{
-				if (end.equals(moves[i]))
+			if(end_x - start_x == 2 
+				|| start_x - end_x == 2) {
+				
+				return;
+				
+			} else {
+			
+				Tile moves[] = possibleMove();
+				for (int i = 0; i < moves.length; i++)
 				{
-					Board.chess_board[end_x][end_y].isOccupied = true;
-					Board.chess_board[start_x][start_y].isOccupied = false;
-					currentTile = end;
-					first_move = false;
-					break;
+					if (end.equals(moves[i]))
+					{
+						Board.chess_board[end_x][end_y].isOccupied = true;
+						Board.chess_board[start_x][start_y].isOccupied = false;
+						currentTile = end;
+						first_move = false;
+						break;
+					}
 				}
 			}
 		}			
@@ -59,7 +67,9 @@ public class King extends Piece{
 				|| startLet - endLet == 1 && startNum == endNum
 				|| endLet - startLet == 1 && startNum == endNum
 				|| startLet - endLet == 1 && endNum - startNum == 1
-				|| endLet - startLet == 1 && startNum - endNum == 1) {
+				|| endLet - startLet == 1 && startNum - endNum == 1
+				|| endLet - startLet == 2 
+				|| startLet - endLet == 2) {
 					
 			return true;
 		}

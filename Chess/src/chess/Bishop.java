@@ -8,16 +8,7 @@ public class Bishop extends Piece {
 
 	public Bishop(Tile currentTile, String color) {
 		super(currentTile, color);
-		
-		if(color.equals("white")) {
-			
-			tag = "wB";
-			
-		} else {
-			
-			tag = "bB";
-		}
-	}
+		if(color.equals("white")) {tag = "wB";} else {tag = "bB";}}
 	
 	//check if it is a valid move then check that the end tile is currently reachable
 	//by the piece. If so, update the currentTile to the end tile.
@@ -25,15 +16,20 @@ public class Bishop extends Piece {
 	@Override
 	public void move(Tile end) {
 		
+		int end_x = end.letter_rank;
+		int end_y = end.number_rank;
+		int start_x = currentTile.letter_rank;
+		int start_y = currentTile.number_rank;
+		
 		if (isValidPath(currentTile, end) == true) {
 			
 			Tile moves[] = possibleMove();
-			
-			for (int i = 0; i < moves.length; i++) {
-				
-				if (end.equals(moves[i])) {
-					
-					currentTile.isOccupied = false;
+			for (int i = 0; i < moves.length; i++)
+			{
+				if (end.equals(moves[i]))
+				{
+					Board.chess_board[end_x][end_y].isOccupied = true;
+					Board.chess_board[start_x][start_y].isOccupied = false;
 					currentTile = end;
 					break;
 				}

@@ -10,26 +10,24 @@ public class King extends Piece{
 	public King(Tile currentTile, String color) {
 		
 		super(currentTile, color);
-		
-		if (color.equals("white")) {
-			tag = "wK";
-			
-		} else {
-			tag = "bK";
-		}
-	}
-	
+		if (color.equals("white")) {tag = "wK";} else {tag = "bK";}}
 
 	public void move(Tile end) {
 		
+		int end_x = end.letter_rank;
+		int end_y = end.number_rank;
+		int start_x = currentTile.letter_rank;
+		int start_y = currentTile.number_rank;
+		
 		if (isValidPath(currentTile, end) == true) {
-						
-			Tile moves[] = possibleMove();
 			
-			for (int i = 0; i < moves.length; i++) {
-				
-				if (end.equals(moves[i])) {			
-					currentTile.isOccupied = false;
+			Tile moves[] = possibleMove();
+			for (int i = 0; i < moves.length; i++)
+			{
+				if (end.equals(moves[i]))
+				{
+					Board.chess_board[end_x][end_y].isOccupied = true;
+					Board.chess_board[start_x][start_y].isOccupied = false;
 					currentTile = end;
 					first_move = false;
 					break;

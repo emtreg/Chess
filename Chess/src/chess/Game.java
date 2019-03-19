@@ -9,6 +9,8 @@ public class Game {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		//Fill the board with starting pieces and display initial game board.
 		Board.initialBoard();
 		Board.makeBoard();
 		
@@ -43,12 +45,12 @@ public class Game {
 				int w_end_let = Tile.translateLetterToInt(input.substring(2, 3));
 				int w_end_num = Integer.parseInt(input.substring(3, 4));
 				w_end_num = 7 - (w_end_num-1);
-				 
+								 
 				Board.chess_board[w_start_num][w_start_let].occupying_piece.move(Board.chess_board[w_end_num][w_end_let]);
 				//Add code here that checks if the end piece isOccupied and adds that piece to the graveyard
 				Board.chess_board[w_end_num][w_end_let].occupying_piece = Board.chess_board[w_start_num][w_start_let].occupying_piece;
 				Board.chess_board[w_start_num][w_start_let].occupying_piece = null;
-
+				
 				turn++;
 				Board.makeBoard();
 			}
@@ -67,17 +69,19 @@ public class Game {
 				int b_end_num = Integer.parseInt(input.substring(3, 4));
 				b_end_num = 7 - (b_end_num-1);
 				
+				Board.chess_board[b_start_num][b_start_let].occupying_piece.possibleMove();
+				
 				Board.chess_board[b_start_num][b_start_let].occupying_piece.move(Board.chess_board[b_end_num][b_end_let]);
 				//Add code here that checks if the end piece isOccupied and adds that piece to the graveyard
 				Board.chess_board[b_end_num][b_end_let].occupying_piece = Board.chess_board[b_start_num][b_start_let].occupying_piece;
 				Board.chess_board[b_start_num][b_start_let].occupying_piece = null;
-				
+												
 				turn++;
 				
 				Board.makeBoard();
 			}
 			//This is just to debug so the game doesn't go on forever.
-			if (turn==3){break;}
+			if (turn==4){break;}
 			
 		}
 

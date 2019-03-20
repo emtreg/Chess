@@ -19,6 +19,18 @@ public class King extends Piece{
 		int start_x = currentTile.letter_rank;
 		int start_y = currentTile.number_rank;
 		
+		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
+		{
+			
+			Board.chess_board[end_x][end_y].isOccupied = true;
+			Board.chess_board[start_x][start_y].isOccupied = false;
+			
+			currentTile = end;
+			
+		}
+		
+		/*
+		
 		if (isValidPath(currentTile, end) == true) {
 			
 			if(end_x - start_x == 2 
@@ -41,7 +53,9 @@ public class King extends Piece{
 					}
 				}
 			}
-		}			
+		}
+		
+		*/
 	}
 	
 	/*if:

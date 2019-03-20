@@ -20,8 +20,15 @@ public class Rook extends Piece {
 		int start_x = currentTile.letter_rank;
 		int start_y = currentTile.number_rank;
 		
-		if (isValidPath(currentTile, end) == true)
+		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
 		{
+			
+			Board.chess_board[end_x][end_y].isOccupied = true;
+			Board.chess_board[start_x][start_y].isOccupied = false;
+			
+			currentTile = end;
+			
+			/*
 	
 			Tile moves[] = possibleMove();
 			for (int i = 0; i < moves.length; i++)
@@ -35,7 +42,11 @@ public class Rook extends Piece {
 					break;
 				}
 			}
+			
+			*/
 		}
+		
+		
 	}
 	
 	//If one of the ranks is the same between start to end, it is a valid move.

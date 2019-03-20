@@ -52,6 +52,8 @@ public class Game {
 				
 				//if piece to be moved is a king and it is a valid castling move path
 				
+				/*
+				
 				if(Board.chess_board[w_start_num][w_start_let].occupying_piece.pieceType.equals("king") 
 						&& (w_end_let - w_start_let == 2 || w_start_let - w_end_let == 2)) {
 					
@@ -150,11 +152,13 @@ public class Game {
 					}		
 				}
 				
+				*/
+				
 				Board.chess_board[w_end_num][w_end_let].occupying_piece = Board.chess_board[w_start_num][w_start_let].occupying_piece;
 				Board.chess_board[w_start_num][w_start_let].occupying_piece = null;
 				
 				turn++;
-				Board.makeBoard();
+
 			}
 			else
 			{
@@ -175,6 +179,8 @@ public class Game {
 				
 				Board.chess_board[b_start_num][b_start_let].occupying_piece.move(Board.chess_board[b_end_num][b_end_let]);
 				
+				/*
+				
 				//if piece captured, add to player1's graveyard
 				
 				if(Board.chess_board[b_end_num][b_end_let].isOccupied) {
@@ -191,6 +197,8 @@ public class Game {
 						}	
 					}				
 				}
+				
+				*/
 								
 				Board.chess_board[b_end_num][b_end_let].occupying_piece = Board.chess_board[b_start_num][b_start_let].occupying_piece;
 				Board.chess_board[b_start_num][b_start_let].occupying_piece = null;
@@ -200,7 +208,7 @@ public class Game {
 				Board.makeBoard();
 			}
 			//This is just to debug so the game doesn't go on forever.
-			if (turn==4){break;}
+			//if (turn==4){break;}
 			
 		}
 

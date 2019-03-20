@@ -18,6 +18,18 @@ public class Knight extends Piece{
 		int start_x = currentTile.letter_rank;
 		int start_y = currentTile.number_rank;
 		
+		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
+		{
+			
+			Board.chess_board[end_x][end_y].isOccupied = true;
+			Board.chess_board[start_x][start_y].isOccupied = false;
+			
+			currentTile = end;
+			
+		}
+		
+		/*
+		
 		if (isValidPath(currentTile, end) == true) {
 			
 			Tile moves[] = possibleMove();
@@ -31,7 +43,9 @@ public class Knight extends Piece{
 					break;
 				}
 			}
-		}		
+		}
+		
+		*/
 	}
 	
 	/*if file increases/decreases by 1 and rank increases/decreases by 2 or if

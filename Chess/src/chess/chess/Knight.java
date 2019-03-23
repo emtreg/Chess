@@ -19,19 +19,7 @@ public class Knight extends Piece{
 		int start_y = currentTile.number_rank;
 		
 		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
-		{
-			
-			Board.chess_board[end_x][end_y].isOccupied = true;
-			Board.chess_board[start_x][start_y].isOccupied = false;
-			
-			currentTile = end;
-			
-		}
-		
-		/*
-		
-		if (isValidPath(currentTile, end) == true) {
-			
+		{			
 			Tile moves[] = possibleMove();
 			for (int i = 0; i < moves.length; i++)
 			{
@@ -42,10 +30,8 @@ public class Knight extends Piece{
 					currentTile = end;
 					break;
 				}
-			}
-		}
-		
-		*/
+			}		
+		}		
 	}
 	
 	/*if file increases/decreases by 1 and rank increases/decreases by 2 or if
@@ -58,41 +44,22 @@ public class Knight extends Piece{
 		int endLet = end.letter_rank;
 		int endNum = end.number_rank;
 		
-		if(endLet - startLet == 1 && endNum - startNum == 2 
-				|| startLet - endLet == 1 && startNum - endNum == 2 
-				|| endLet - startLet == 1 && startNum - endNum == 2 
-				|| startLet - endLet == 1 && endNum - startNum == 2 
-				|| endLet - startLet == 2 && endNum - startNum == 1
-				|| startLet - endLet == 2 && startNum - endNum == 1
-				|| endLet - startLet == 2 && startNum - endNum == 1
-				|| startLet - endLet == 2 && endNum - startNum == 1) {
+		if(endLet - startLet == 1 && endNum - startNum == 2 //file increases by 1, rank increases by 2
+				|| startLet - endLet == 1 && startNum - endNum == 2 //file decreases by 1, rank decreases by 2
+				|| endLet - startLet == 1 && startNum - endNum == 2 //file increases by 1, rank decreases by 2
+				|| startLet - endLet == 1 && endNum - startNum == 2 //file decreases by 1, rank increases by 2
+				|| endLet - startLet == 2 && endNum - startNum == 1 //file increases by 2, rank increases by 1
+				|| startLet - endLet == 2 && startNum - endNum == 1 //file decreases by 2, rank decreases by 1
+				|| endLet - startLet == 2 && startNum - endNum == 1 //file increases by 2, rank decreases by 1
+				|| startLet - endLet == 2 && endNum - startNum == 1) { //file decreases by 2, rank increases by 1
 			
 			return true;
-		}
+			
+		} else {
 		
 		return false;	
-	}
-	
-	/*helper method for possibleMoves, checks occupation status/occupying piece color and adds tile to
-	 * reachableTiles array if move is valid */
-	
-	public void checkTile(int file, int rank, int count, Tile[] reachableTiles) {
 		
-		if(Board.chess_board[file][rank].isOccupied == true) {		
-			if(Board.chess_board[file][rank].occupying_piece.color.equals(color)) {				
-				return;			
-			} else {				
-				reachableTiles[count] = Board.chess_board[file][rank];
-				count++;
-			}			
-		} else {			
-			reachableTiles[count] = Board.chess_board[file][rank];
-			count++;		
 		}
-		
-		file = currentTile.letter_rank;
-		rank = currentTile.number_rank;
-			
 	}
 
 	public Tile[] possibleMove()
@@ -102,73 +69,109 @@ public class Knight extends Piece{
 		int x = currentTile.letter_rank;
 		int y = currentTile.number_rank;
 		int count = 0;
-		int file = currentTile.letter_rank;
-		int rank = currentTile.number_rank;
 		
-		if((x+1) < 8 && (y+2) < 8) {	
+		if((x+1 <= 7) && (y+2 <= 7)) {	//file increases by 1, rank increases by 2
 			
-			file = x+1;
-			rank = y+2;
-			
-			checkTile(file, rank, count, reachableTiles);
-	
+			if(Board.chess_board[x+1][y+2].isOccupied == true) {		
+				if(!Board.chess_board[x+1][y+2].occupying_piece.color.equals(color)) {						
+					reachableTiles[count] = Board.chess_board[x+1][y+2];
+					count++;
+				}			
+			} else {			
+				reachableTiles[count] = Board.chess_board[x+1][y+2];
+				count++;		
+			}	
 		}
 		
-		if((x-1) >= 0 && (y+2) < 8) {
+		if((x-1 >= 0) && (y+2 <= 7)) {
 			
-			file = x-1;
-			rank = y+2;
-			
-			checkTile(file, rank, count, reachableTiles);
-				
+			if(Board.chess_board[x-1][y+2].isOccupied == true) {		
+				if(!Board.chess_board[x-1][y+2].occupying_piece.color.equals(color)) {							
+					reachableTiles[count] = Board.chess_board[x-1][y+2];
+					count++;
+				}			
+			} else {			
+				reachableTiles[count] = Board.chess_board[x-1][y+2];
+				count++;		
+			}				
 		}
 		
-		if((x-1) >= 0 && (y-2) >= 0) {	
+		if((x-1 >= 0) && (y-2 >= 0)) {	
 			
-			file = x-1;
-			rank = y-2;
-			
-			checkTile(file, rank, count, reachableTiles);	
+			if(Board.chess_board[x-1][y-2].isOccupied == true) {		
+				if(!Board.chess_board[x-1][y-2].occupying_piece.color.equals(color)) {							
+					reachableTiles[count] = Board.chess_board[x-1][y-2];
+					count++;
+				}			
+			} else {			
+				reachableTiles[count] = Board.chess_board[x-1][y-2];
+				count++;		
+			}				
 		}
 		
-		if((x+1) < 8 && (y-2) >= 0) {	
+		if((x+1 <= 7) && (y-2 >= 0)) {	
 			
-			file = x+1;
-			rank = y-2;
-			
-			checkTile(file, rank, count, reachableTiles);	
+			if(Board.chess_board[x+1][y-2].isOccupied == true) {		
+				if(!Board.chess_board[x+1][y-2].occupying_piece.color.equals(color)) {							
+					reachableTiles[count] = Board.chess_board[x+1][y-2];
+					count++;
+				}			
+			} else {			
+				reachableTiles[count] = Board.chess_board[x+1][y-2];
+				count++;		
+			}
 		}
 		
-		if((x+2) < 8 && (y+1) < 8) {	
+		if((x+2 <= 7) && (y+1 <= 7)) {	
 			
-			file = x+2;
-			rank = y+1;
-			
-			checkTile(file, rank, count, reachableTiles);		
+			if(Board.chess_board[x+2][y+1].isOccupied == true) {		
+				if(!Board.chess_board[x+2][y+1].occupying_piece.color.equals(color)) {							
+					reachableTiles[count] = Board.chess_board[x+2][y+1];
+					count++;
+				}			
+			} else {			
+				reachableTiles[count] = Board.chess_board[x+2][y+1];
+				count++;		
+			}
 		}
 		
-		if((x-2) >= 0 && (y-1) >= 0) {
+		if((x-2 >= 0) && (y-1 >= 0)) {
 			
-			file = x-2;
-			rank = y-1;
-			
-			checkTile(file, rank, count, reachableTiles);
+			if(Board.chess_board[x-2][y-1].isOccupied == true) {		
+				if(!Board.chess_board[x-2][y-1].occupying_piece.color.equals(color)) {							
+					reachableTiles[count] = Board.chess_board[x-2][y-1];
+					count++;
+				}			
+			} else {			
+				reachableTiles[count] = Board.chess_board[x-2][y-1];
+				count++;		
+			}
 		}
 		
-		if((x-2) >= 0 && (y+1) < 8) { 
+		if((x-2 >= 0) && (y+1 <= 7)) { 
 			
-			file = x-2;
-			rank = y+1;
-			
-			checkTile(file, rank, count, reachableTiles);
+			if(Board.chess_board[x-2][y+1].isOccupied == true) {		
+				if(!Board.chess_board[x-2][y+1].occupying_piece.color.equals(color)) {							
+					reachableTiles[count] = Board.chess_board[x-2][y+1];
+					count++;
+				}			
+			} else {			
+				reachableTiles[count] = Board.chess_board[x-2][y+1];
+				count++;		
+			}
 		}
 		
-		if((x+2) < 8 && (y-1) >= 0) {
+		if((x+2 <= 7) && (y-1 >= 0)) {
 			
-			file = x+2;
-			rank = y-1;
-			
-			checkTile(file, rank, count, reachableTiles);
+			if(Board.chess_board[x+2][y-1].isOccupied == true) {		
+				if(!Board.chess_board[x+2][y-1].occupying_piece.color.equals(color)) {							
+					reachableTiles[count] = Board.chess_board[x+2][y-1];
+					count++;
+				}			
+			} else {			
+				reachableTiles[count] = Board.chess_board[x+2][y-1];
+				count++;		
+			}
 		}
 					
 		return reachableTiles;

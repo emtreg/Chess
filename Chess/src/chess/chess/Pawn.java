@@ -26,13 +26,26 @@ public class Pawn extends Piece{
 		int start_y = currentTile.number_rank;
 		
 		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
-		{
-			Board.chess_board[end_x][end_y].isOccupied = true;
-			Board.chess_board[start_x][start_y].isOccupied = false;
-			
-			currentTile = end;
+		{				
+			Tile moves[] = possibleMove();
+			for (int i = 0; i < moves.length; i++)
+			{
+				if (end.equals(moves[i]))
+				{
+					Board.chess_board[end_x][end_y].isOccupied = true;
+					Board.chess_board[start_x][start_y].isOccupied = false;
+					currentTile = end;
+					break;
+				}
+			}
 		}
 	}
+			//Board.chess_board[end_x][end_y].isOccupied = true;
+			//Board.chess_board[start_x][start_y].isOccupied = false;
+			
+			//currentTile = end;
+		//}
+	//}
 	
 	public boolean isValidPath(Tile start, Tile end)
 	{

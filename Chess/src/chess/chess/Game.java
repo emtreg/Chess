@@ -48,11 +48,11 @@ public class Game {
 								 
 				Board.chess_board[w_start_num][w_start_let].occupying_piece.move(Board.chess_board[w_end_num][w_end_let]);
 				
+				/*
+				
 				//Castling move
 				
 				//if piece to be moved is a king and it is a valid castling move path
-				
-				/*
 				
 				if(Board.chess_board[w_start_num][w_start_let].occupying_piece.pieceType.equals("king") 
 						&& (w_end_let - w_start_let == 2 || w_start_let - w_end_let == 2)) {
@@ -135,24 +135,23 @@ public class Game {
 					}
 				}
 				
+				*/
+				
+				
 				//if piece captured, add to player2's graveyard
 				
-				if(Board.chess_board[w_end_num][w_end_let].isOccupied) {
-				
-					if(!Board.chess_board[w_end_num][w_end_let].occupying_piece.color.equals(Board.chess_board[w_start_num][w_end_let].occupying_piece.color)) {
-						
-						for(int i = 0; i < player2.graveyard.length; i++) {
-				
-							if(player2.graveyard[i] == null) {
-								
-								player2.graveyard[i] = Board.chess_board[w_end_num][w_end_let].occupying_piece;
-								break;
-							}
-						}	
-					}		
+				if(Board.chess_board[w_end_num][w_end_let].isOccupied) {	
+					if(Board.chess_board[w_end_num][w_end_let].occupying_piece != null) {
+						if(!Board.chess_board[w_end_num][w_end_let].occupying_piece.color.equals(Board.chess_board[w_start_num][w_start_let].occupying_piece.color)) {										
+							for(int i = 0; i < player2.graveyard.length; i++) {				
+								if(player2.graveyard[i] == null) {					
+									player2.graveyard[i] = Board.chess_board[w_end_num][w_end_let].occupying_piece;
+									break;
+								}
+							}					
+						} 
+					}
 				}
-				
-				*/
 				
 				Board.chess_board[w_end_num][w_end_let].occupying_piece = Board.chess_board[w_start_num][w_start_let].occupying_piece;
 				Board.chess_board[w_start_num][w_start_let].occupying_piece = null;
@@ -175,30 +174,25 @@ public class Game {
 				int b_end_num = Integer.parseInt(input.substring(3, 4));
 				b_end_num = 7 - (b_end_num-1);
 				
-				Board.chess_board[b_start_num][b_start_let].occupying_piece.possibleMove();
+				//Board.chess_board[b_start_num][b_start_let].occupying_piece.possibleMove();
 				
 				Board.chess_board[b_start_num][b_start_let].occupying_piece.move(Board.chess_board[b_end_num][b_end_let]);
 				
-				/*
 				
 				//if piece captured, add to player1's graveyard
 				
-				if(Board.chess_board[b_end_num][b_end_let].isOccupied) {
-				
-					if(!Board.chess_board[b_end_num][b_end_let].occupying_piece.color.equals(Board.chess_board[b_start_num][b_end_let].occupying_piece.color)) {
-						
-						for(int i = 0; i < player1.graveyard.length; i++) {
-				
-							if(player1.graveyard[i] == null) {
-								
-								player1.graveyard[i] = Board.chess_board[b_end_num][b_end_let].occupying_piece;
-								break;
-							}														
+				if(Board.chess_board[b_end_num][b_end_let].isOccupied) {	
+					if(Board.chess_board[b_end_num][b_end_let].occupying_piece != null) {
+						if(!Board.chess_board[b_end_num][b_end_let].occupying_piece.color.equals(Board.chess_board[b_start_num][b_start_let].occupying_piece.color)) {						
+							for(int i = 0; i < player1.graveyard.length; i++) {				
+								if(player1.graveyard[i] == null) {								
+									player1.graveyard[i] = Board.chess_board[b_end_num][b_end_let].occupying_piece;
+									break;
+								}														
+							}	
 						}	
-					}				
-				}
-				
-				*/
+					}
+				}			
 								
 				Board.chess_board[b_end_num][b_end_let].occupying_piece = Board.chess_board[b_start_num][b_start_let].occupying_piece;
 				Board.chess_board[b_start_num][b_start_let].occupying_piece = null;

@@ -18,34 +18,20 @@ public class Queen extends Piece{
 		int start_x = currentTile.letter_rank;
 		int start_y = currentTile.number_rank;
 		
-		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
-		{
-			
-			Board.chess_board[end_x][end_y].isOccupied = true;
-			Board.chess_board[start_x][start_y].isOccupied = false;
-			
-			currentTile = end;
-			
-		}
-		
-		/*
-		
-		if (isValidPath(currentTile, end) == true) {
+		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true) {
 			
 			Tile moves[] = possibleMove();
-			for (int i = 0; i < moves.length; i++)
-			{
-				if (end.equals(moves[i]))
-				{
+			
+			for (int i = 0; i < moves.length; i++) {
+				
+				if (end.equals(moves[i])) {
 					Board.chess_board[end_x][end_y].isOccupied = true;
 					Board.chess_board[start_x][start_y].isOccupied = false;
 					currentTile = end;
 					break;
 				}
 			}
-		}
-		
-		*/
+		}	
 	}
 	
 	/* if only file changes or only rank changes it is a valid (lateral) move
@@ -79,15 +65,15 @@ public class Queen extends Piece{
 		int cnt = 0;
 		
 		//First check forward tiles
-		for (int i = currentTile.number_rank; i < 8; i++) {
-			if (Board.chess_board[i][currentTile.letter_rank].isOccupied == false) {
-				reachableTiles[cnt] = Board.chess_board[i][currentTile.letter_rank];
+		for (int i = currentTile.number_rank + 1; i < 8; i++) {
+			if (Board.chess_board[currentTile.letter_rank][i].isOccupied == false) {
+				reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank][i];
 				cnt++;
 			} else {
-				if (Board.chess_board[i][currentTile.letter_rank].occupying_piece.color.equals(color)) {
+				if (Board.chess_board[currentTile.letter_rank][i].occupying_piece.color.equals(color)) {
 					break;
 				} else {
-					reachableTiles[cnt] = Board.chess_board[i][currentTile.letter_rank];
+					reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank][i];
 					cnt++;
 					break;
 				}
@@ -95,15 +81,15 @@ public class Queen extends Piece{
 		}
 				
 		//Then check backward tiles
-		for (int i = currentTile.number_rank; i >= 0; i--) {
-			if (Board.chess_board[i][currentTile.letter_rank].isOccupied == false) {
-				reachableTiles[cnt] = Board.chess_board[i][currentTile.letter_rank];
+		for (int i = currentTile.number_rank - 1; i >= 0; i--) {
+			if (Board.chess_board[currentTile.letter_rank][i].isOccupied == false) {
+				reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank][i];
 				cnt++;
 			} else {
-				if (Board.chess_board[i][currentTile.letter_rank].occupying_piece.color.equals(color)) {
+				if (Board.chess_board[currentTile.letter_rank][i].occupying_piece.color.equals(color)) {
 					break;
 				} else {
-					reachableTiles[cnt] = Board.chess_board[i][currentTile.letter_rank];
+					reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank][i];
 					cnt++;
 					break;
 				}
@@ -111,15 +97,15 @@ public class Queen extends Piece{
 		}
 				
 		//Then check right tiles
-		for (int i = currentTile.letter_rank; i < 8; i++) {
-			if (Board.chess_board[currentTile.number_rank][i].isOccupied == false) {
-				reachableTiles[cnt] = Board.chess_board[i][currentTile.letter_rank];
+		for (int i = currentTile.letter_rank + 1; i < 8; i++) {
+			if (Board.chess_board[i][currentTile.number_rank].isOccupied == false) {
+				reachableTiles[cnt] = Board.chess_board[i][currentTile.number_rank];
 				cnt++;
 			} else {
-				if (Board.chess_board[currentTile.number_rank][i].occupying_piece.color.equals(color)) {
+				if (Board.chess_board[i][currentTile.number_rank].occupying_piece.color.equals(color)) {
 					break;
 				} else {
-					reachableTiles[cnt] = Board.chess_board[i][currentTile.letter_rank];
+					reachableTiles[cnt] = Board.chess_board[i][currentTile.number_rank];
 					cnt++;
 					break;
 				}
@@ -127,15 +113,15 @@ public class Queen extends Piece{
 		}
 				
 		//Finally check left tiles
-		for (int i = currentTile.letter_rank; i >= 0; i--) {
-			if (Board.chess_board[currentTile.number_rank][i].isOccupied == false) {
-				reachableTiles[cnt] = Board.chess_board[i][currentTile.letter_rank];
+		for (int i = currentTile.letter_rank - 1; i >= 0; i--) {
+			if (Board.chess_board[i][currentTile.number_rank].isOccupied == false) {
+				reachableTiles[cnt] = Board.chess_board[i][currentTile.number_rank];
 				cnt++;
 			} else {
-				if (Board.chess_board[currentTile.number_rank][i].occupying_piece.color.equals(color)) {
+				if (Board.chess_board[i][currentTile.number_rank].occupying_piece.color.equals(color)) {
 					break;
 				} else {
-					reachableTiles[cnt] = Board.chess_board[i][currentTile.letter_rank];
+					reachableTiles[cnt] = Board.chess_board[i][currentTile.number_rank];
 					cnt++;
 					break;
 				}
@@ -143,7 +129,7 @@ public class Queen extends Piece{
 		}
 								
 		//check upper right diagonals
-		for(int x = currentTile.letter_rank, y = currentTile.number_rank; x < 8 && y < 8; x++, y++) {		
+		for(int x = currentTile.letter_rank + 1, y = currentTile.number_rank + 1; x < 8 && y < 8; x++, y++) {		
 			if(Board.chess_board[x][y].isOccupied) {			
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
 					break;			
@@ -159,7 +145,7 @@ public class Queen extends Piece{
 		}
 				
 		//check lower left diagonals					
-		for(int x = currentTile.letter_rank, y = currentTile.number_rank; x >= 0 && y >= 0; x--, y--) {				
+		for(int x = currentTile.letter_rank - 1, y = currentTile.number_rank - 1; x >= 0 && y >= 0; x--, y--) {				
 			if(Board.chess_board[x][y].isOccupied) {			
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
 					break;			
@@ -175,7 +161,7 @@ public class Queen extends Piece{
 		}
 				
 		//check lower right diagonals				
-		for(int x = currentTile.letter_rank, y = currentTile.number_rank; x < 8 && y >= 0; x++, y--) {					
+		for(int x = currentTile.letter_rank + 1, y = currentTile.number_rank - 1; x < 8 && y >= 0; x++, y--) {					
 			if(Board.chess_board[x][y].isOccupied) {			
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
 					break;			
@@ -191,7 +177,7 @@ public class Queen extends Piece{
 		}
 				
 		//check upper left diagonals				
-		for(int x = currentTile.letter_rank, y = currentTile.number_rank; x >= 0 && y < 8; x--, y++) {					
+		for(int x = currentTile.letter_rank - 1, y = currentTile.number_rank + 1; x >= 0 && y < 8; x--, y++) {					
 			if(Board.chess_board[x][y].isOccupied) {			
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
 					break;			

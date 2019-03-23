@@ -20,34 +20,24 @@ public class Rook extends Piece {
 		int start_x = currentTile.letter_rank;
 		int start_y = currentTile.number_rank;
 		
-		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
-		{
-			
-			Board.chess_board[end_x][end_y].isOccupied = true;
-			Board.chess_board[start_x][start_y].isOccupied = false;
-			
-			currentTile = end;
-			
-			/*
-	
+		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true) {
+				
 			Tile moves[] = possibleMove();
-			for (int i = 0; i < moves.length; i++)
-			{
-				if (end.equals(moves[i]))
-				{
+			
+			for (int i = 0; i < moves.length; i++) {
+				
+				if (end.equals(moves[i])) {
+					
 					Board.chess_board[end_x][end_y].isOccupied = true;
 					Board.chess_board[start_x][start_y].isOccupied = false;
 					currentTile = end;
 					first_move = false;
 					break;
 				}
-			}
-			
-			*/
+			}					
 		}
-		
-		
 	}
+		
 	
 	//If one of the ranks is the same between start to end, it is a valid move.
 	public boolean isValidPath(Tile start, Tile end)
@@ -68,7 +58,7 @@ public class Rook extends Piece {
 		Tile[] reachableTiles = new Tile[14];
 		
 		//First check forward tiles
-		for (int i = currentTile.number_rank; i < 8; i++)
+		for (int i = currentTile.number_rank + 1; i < 8; i++)
 		{
 			if (Board.chess_board[i][currentTile.letter_rank].isOccupied == false)
 			{
@@ -91,7 +81,7 @@ public class Rook extends Piece {
 		}
 		
 		//Then check backward tiles
-		for (int i = currentTile.number_rank; i >= 0; i--)
+		for (int i = currentTile.number_rank - 1; i >= 0; i--)
 		{
 			if (Board.chess_board[i][currentTile.letter_rank].isOccupied == false)
 			{
@@ -114,7 +104,7 @@ public class Rook extends Piece {
 		}
 		
 		//Then check right tiles
-		for (int i = currentTile.letter_rank; i < 8; i++)
+		for (int i = currentTile.letter_rank + 1; i < 8; i++)
 		{
 			if (Board.chess_board[currentTile.number_rank][i].isOccupied == false)
 			{
@@ -137,7 +127,7 @@ public class Rook extends Piece {
 		}
 		
 		//Finally check left tiles
-		for (int i = currentTile.letter_rank; i >= 0; i--)
+		for (int i = currentTile.letter_rank - 1; i >= 0; i--)
 		{
 			if (Board.chess_board[currentTile.number_rank][i].isOccupied == false)
 			{

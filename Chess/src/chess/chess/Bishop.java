@@ -21,35 +21,23 @@ public class Bishop extends Piece {
 		int start_x = currentTile.letter_rank;
 		int start_y = currentTile.number_rank;
 		
-		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
-		{
-			
-			Board.chess_board[end_x][end_y].isOccupied = true;
-			Board.chess_board[start_x][start_y].isOccupied = false;
-			
-			currentTile = end;
-			
-		}
-		
-		/*
-		
-		if (isValidPath(currentTile, end) == true) {
+		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true) {
 			
 			Tile moves[] = possibleMove();
-			for (int i = 0; i < moves.length; i++)
-			{
-				if (end.equals(moves[i]))
-				{
+			
+			for (int i = 0; i < moves.length; i++) {
+				
+				if (end.equals(moves[i])) {
+					
 					Board.chess_board[end_x][end_y].isOccupied = true;
 					Board.chess_board[start_x][start_y].isOccupied = false;
 					currentTile = end;
 					break;
 				}
-			}
-		}
-		
-				*/
+			}				
+		}	
 	}
+	
 	
 	/*if file and rank both increase/decrease by the same amount, file increases and rank decreases by the same amount,
 	 * or file decreases and rank increases by the same amount then it is a valid (diagonal) move
@@ -83,7 +71,7 @@ public class Bishop extends Piece {
 		
 		//check upper right diagonals
 		
-		for(int x = currentTile.letter_rank, y = currentTile.number_rank; x < 8 && y < 8; x++, y++) {
+		for(int x = currentTile.letter_rank + 1, y = currentTile.number_rank + 1; x <= 7 && y <= 7; x++, y++) {
 			
 			if(Board.chess_board[x][y].isOccupied) {			
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
@@ -101,7 +89,7 @@ public class Bishop extends Piece {
 		
 		//check lower left diagonals
 			
-		for(int x = currentTile.letter_rank, y = currentTile.number_rank; x >= 0 && y >= 0; x--, y--) {
+		for(int x = currentTile.letter_rank - 1, y = currentTile.number_rank - 1; x >= 0 && y >= 0; x--, y--) {
 			
 			if(Board.chess_board[x][y].isOccupied) {			
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
@@ -119,7 +107,7 @@ public class Bishop extends Piece {
 		
 		//check lower right diagonals
 		
-		for(int x = currentTile.letter_rank, y = currentTile.number_rank; x < 8 && y >= 0; x++, y--) {
+		for(int x = currentTile.letter_rank + 1, y = currentTile.number_rank - 1; x <= 7 && y >= 0; x++, y--) {
 			
 			if(Board.chess_board[x][y].isOccupied) {			
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				
@@ -137,7 +125,7 @@ public class Bishop extends Piece {
 		
 		//check upper left diagonals
 		
-		for(int x = currentTile.letter_rank, y = currentTile.number_rank; x >= 0 && y < 8; x--, y++) {
+		for(int x = currentTile.letter_rank - 1, y = currentTile.number_rank + 1; x >= 0 && y <= 7; x--, y++) {
 			
 			if(Board.chess_board[x][y].isOccupied) {			
 				if(Board.chess_board[x][y].getOccupyingPiece().color.equals(color)) {				

@@ -1,4 +1,4 @@
-package chess;
+package chess.chess;
 
 public class King extends Piece{
 	
@@ -235,15 +235,26 @@ public class King extends Piece{
 	
 	public boolean validOutOfCheck(Tile end_tile)
 	{
-		for (int i = 0; i < 8; i++){ //traverse the board 
-			for (int j = 0; j < 8; j++){
-				if (!Board.chess_board[i][j].color.equals(color)){ //if the piece is an enemy piece, check the piece's possible move array and see if the proposed move is in it
-				for (int k = 0; k < Board.chess_board[i][j].occupying_piece.possibleMove().length; k++){
-					if (Board.chess_board[i][j].occupying_piece.possibleMove()[k].equals(end_tile))
-					{ //if the proposed move is in one of these possibleMove arrays, it will not get the king out of check
-						return false;
+		for (int i = 0; i < 8; i++)
+		{ //traverse the board 
+			for (int j = 0; j < 8; j++)
+			{
+				if (Board.chess_board[i][j].isOccupied)
+				{
+					if (!(Board.chess_board[i][j].color.equals(color)))
+					{ //if the piece is an enemy piece, check the piece's possible move array and see if the proposed move is in it
+						for (int k = 0; k < Board.chess_board[i][j].occupying_piece.possibleMove().length; k++)
+						{
+							if (Board.chess_board[i][j].occupying_piece.possibleMove()[k] != null)
+							{
+								if (Board.chess_board[i][j].occupying_piece.possibleMove()[k].equals(end_tile))
+								{ //if the proposed move is in one of these possibleMove arrays, it will not get the king out of check
+									return false;
+								}
+							}
+						}
 					}
-				}}
+				}
 			}
 		}
 		return true;

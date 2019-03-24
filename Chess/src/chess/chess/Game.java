@@ -1,4 +1,4 @@
-package chess;
+package chess.chess;
 import java.util.Scanner;
 
 /* This is the main class that executes the flow of the game */
@@ -32,34 +32,44 @@ public class Game {
 				input = input.replaceAll(" ", "");
 				if (input.equals("resign")){break;} //enter "resign" to end the game
 				
-				int w_start_let = Tile.translateLetterToInt(input.substring(0, 1));
-				int w_start_num = Integer.parseInt(input.substring(1, 2));
-				w_start_num = 7 - (w_start_num-1);
-				int w_end_let = Tile.translateLetterToInt(input.substring(2, 3));
-				int w_end_num = Integer.parseInt(input.substring(3, 4));
-				w_end_num = 7 - (w_end_num-1);
+				int w_start_y = Tile.translateLetterToInt(input.substring(0, 1));
+				int w_start_x = Integer.parseInt(input.substring(1, 2));
+				w_start_x = 7 - (w_start_x-1);
+				int w_end_y = Tile.translateLetterToInt(input.substring(2, 3));
+				int w_end_x = Integer.parseInt(input.substring(3, 4));
+				w_end_x = 7 - (w_end_x-1);
 				
 				//System.out.println(Board.chess_board[0][1].occupying_piece.pieceType);
+				/*Board.chess_board[1][3].isOccupied = false; Board.chess_board[1][5].isOccupied = false; //Board.chess_board[1][4].isOccupied = false;
+				Board.chess_board[1][3].occupying_piece = null; Board.chess_board[1][5].occupying_piece = null; //Board.chess_board[1][4].occupying_piece = null;
+				for (int i = 0; i < Board.chess_board[0][4].occupying_piece.possibleMove().length; i++)
+				{
+					if (Board.chess_board[0][4].occupying_piece.possibleMove()[i] != null)
+					{
+						System.out.println(Board.chess_board[0][4].occupying_piece.possibleMove()[i].letter_rank + " ," + Board.chess_board[0][4].occupying_piece.possibleMove()[i].number_rank);
+					}
+				}*/
 				
 				if (player1.king_in_check) //Check if player1's king is in check
 				{
-					if (!(Board.chess_board[w_start_let][w_start_num].occupying_piece.tag.equals("wK"))) //If in check, start tile MUST be king
+					if (checkMate(Board.chess_board[w_start_x][w_start_y].occupying_piece)) //If there is no valid move for the king, check mate
+					{
+						System.out.println("Checkmate! Black wins!");
+						break;
+					}
+					else if (!(Board.chess_board[w_start_x][w_start_y].occupying_piece.tag.equals("wK"))) //If in check, start tile MUST be king
 					{
 						System.out.println("You are in check, you must move your king");
 					}
-					else if (checkMate(Board.chess_board[w_start_let][w_start_num].occupying_piece)) //If there is no valid move for the king, check mate
+					else if (Board.chess_board[w_start_x][w_start_y].occupying_piece.validOutOfCheck(Board.chess_board[w_end_x][w_end_y])) //If moving to the end tile will get the king out of check, do the move
 					{
-						System.out.println("Checkmate! Black wins!");
-					}
-					else if (Board.chess_board[w_start_let][w_start_num].occupying_piece.validOutOfCheck(Board.chess_board[w_end_let][w_end_num])) //If moving to the end tile will get the king out of check, do the move
-					{
-						Board.chess_board[w_start_num][w_start_let].occupying_piece.move(Board.chess_board[w_end_num][w_end_let]);
-						if(Board.chess_board[w_end_num][w_end_let].isOccupied) {	
-							if(Board.chess_board[w_end_num][w_end_let].occupying_piece != null) {
-								if(!Board.chess_board[w_end_num][w_end_let].occupying_piece.color.equals(Board.chess_board[w_start_num][w_start_let].occupying_piece.color)) {										
+						Board.chess_board[w_start_x][w_start_y].occupying_piece.move(Board.chess_board[w_end_x][w_end_y]);
+						if(Board.chess_board[w_end_x][w_end_y].isOccupied) {	
+							if(Board.chess_board[w_end_x][w_end_y].occupying_piece != null) {
+								if(!Board.chess_board[w_end_x][w_end_y].occupying_piece.color.equals(Board.chess_board[w_start_x][w_start_y].occupying_piece.color)) {										
 									for(int i = 0; i < player2.graveyard.length; i++) {				
 										if(player2.graveyard[i] == null) {					
-											player2.graveyard[i] = Board.chess_board[w_end_num][w_end_let].occupying_piece;
+											player2.graveyard[i] = Board.chess_board[w_end_x][w_end_y].occupying_piece;
 											break;
 										}
 									}					
@@ -67,8 +77,8 @@ public class Game {
 							}
 						}
 						
-						Board.chess_board[w_end_num][w_end_let].occupying_piece = Board.chess_board[w_start_num][w_start_let].occupying_piece;
-						Board.chess_board[w_start_num][w_start_let].occupying_piece = null;
+						Board.chess_board[w_end_x][w_end_y].occupying_piece = Board.chess_board[w_start_x][w_start_y].occupying_piece;
+						Board.chess_board[w_start_x][w_start_y].occupying_piece = null;
 						player1.king_in_check = false;
 						turn++;
 					}
@@ -76,15 +86,15 @@ public class Game {
 					
 				}
 				
-				else if (Board.chess_board[w_start_num][w_start_let].occupying_piece.move_check(Board.chess_board[w_end_num][w_end_let])) //check if end tile for non-king piece is in possibleMove()
+				else if (Board.chess_board[w_start_x][w_start_y].occupying_piece.move_check(Board.chess_board[w_end_x][w_end_y])) //check if end tile for non-king piece is in possibleMove()
 				{
-					Board.chess_board[w_start_num][w_start_let].occupying_piece.move(Board.chess_board[w_end_num][w_end_let]);
-					if(Board.chess_board[w_end_num][w_end_let].isOccupied) {	
-						if(Board.chess_board[w_end_num][w_end_let].occupying_piece != null) {
-							if(!Board.chess_board[w_end_num][w_end_let].occupying_piece.color.equals(Board.chess_board[w_start_num][w_start_let].occupying_piece.color)) {										
+					Board.chess_board[w_start_x][w_start_y].occupying_piece.move(Board.chess_board[w_end_x][w_end_y]);
+					if(Board.chess_board[w_end_x][w_end_y].isOccupied) {	
+						if(Board.chess_board[w_end_x][w_end_y].occupying_piece != null) {
+							if(!Board.chess_board[w_end_x][w_end_y].occupying_piece.color.equals(Board.chess_board[w_start_x][w_start_y].occupying_piece.color)) {										
 								for(int i = 0; i < player2.graveyard.length; i++) {				
 									if(player2.graveyard[i] == null) {					
-										player2.graveyard[i] = Board.chess_board[w_end_num][w_end_let].occupying_piece;
+										player2.graveyard[i] = Board.chess_board[w_end_x][w_end_y].occupying_piece;
 										break;
 									}
 								}					
@@ -92,9 +102,9 @@ public class Game {
 						}
 					}
 					
-					Board.chess_board[w_end_num][w_end_let].occupying_piece = Board.chess_board[w_start_num][w_start_let].occupying_piece;
-					Board.chess_board[w_start_num][w_start_let].occupying_piece = null;
-					if (checkForCheck(Board.chess_board[w_end_num][w_end_let].occupying_piece)) //After moving the piece, check if the enemy's king is in the piece's possibleMove()
+					Board.chess_board[w_end_x][w_end_y].occupying_piece = Board.chess_board[w_start_x][w_start_y].occupying_piece;
+					Board.chess_board[w_start_x][w_start_y].occupying_piece = null;
+					if (checkForCheck(Board.chess_board[w_end_x][w_end_y].occupying_piece)) //After moving the piece, check if the enemy's king is in the piece's possibleMove()
 					{
 						player2.king_in_check = true;
 					}
@@ -116,32 +126,33 @@ public class Game {
 				input = input.replaceAll(" ", "");
 				if (input.equals("resign")){break;}
 				
-				int b_start_let = Tile.translateLetterToInt(input.substring(0, 1));
-				int b_start_num = Integer.parseInt(input.substring(1, 2));
-				b_start_num = 7 - (b_start_num-1);
-				int b_end_let = Tile.translateLetterToInt(input.substring(2, 3));
-				int b_end_num = Integer.parseInt(input.substring(3, 4));
-				b_end_num = 7 - (b_end_num-1);
+				int b_start_y = Tile.translateLetterToInt(input.substring(0, 1));
+				int b_start_x = Integer.parseInt(input.substring(1, 2));
+				b_start_x = 7 - (b_start_x-1);
+				int b_end_y = Tile.translateLetterToInt(input.substring(2, 3));
+				int b_end_x = Integer.parseInt(input.substring(3, 4));
+				b_end_x = 7 - (b_end_x-1);
 				
 				if (player2.king_in_check)
 				{
-					if (!(Board.chess_board[b_start_let][b_start_num].occupying_piece.tag.equals("bK")))
+					if (checkMate(Board.chess_board[b_start_x][b_start_y].occupying_piece))
+					{
+						System.out.println("Checkmate! White wins!");
+						break;
+					}
+					else if (!(Board.chess_board[b_start_x][b_start_y].occupying_piece.tag.equals("bK")))
 					{
 						System.out.println("You are in check, you must move your king");
 					}
-					else if (checkMate(Board.chess_board[b_start_let][b_start_num].occupying_piece))
+					else if (Board.chess_board[b_start_x][b_start_y].occupying_piece.validOutOfCheck(Board.chess_board[b_end_x][b_end_y]))
 					{
-						System.out.println("Checkmate! White wins!");
-					}
-					else if (Board.chess_board[b_start_let][b_start_num].occupying_piece.validOutOfCheck(Board.chess_board[b_end_let][b_end_num]))
-					{
-						Board.chess_board[b_start_num][b_start_let].occupying_piece.move(Board.chess_board[b_end_num][b_end_let]);
-						if(Board.chess_board[b_end_num][b_end_let].isOccupied) {	
-							if(Board.chess_board[b_end_num][b_end_let].occupying_piece != null) {
-								if(!Board.chess_board[b_end_num][b_end_let].occupying_piece.color.equals(Board.chess_board[b_start_num][b_start_let].occupying_piece.color)) {										
+						Board.chess_board[b_start_x][b_start_y].occupying_piece.move(Board.chess_board[b_end_x][b_end_y]);
+						if(Board.chess_board[b_end_x][b_end_y].isOccupied) {	
+							if(Board.chess_board[b_end_x][b_end_y].occupying_piece != null) {
+								if(!Board.chess_board[b_end_x][b_end_y].occupying_piece.color.equals(Board.chess_board[b_start_x][b_start_y].occupying_piece.color)) {										
 									for(int i = 0; i < player1.graveyard.length; i++) {				
 										if(player1.graveyard[i] == null) {					
-											player1.graveyard[i] = Board.chess_board[b_end_num][b_end_let].occupying_piece;
+											player1.graveyard[i] = Board.chess_board[b_end_x][b_end_y].occupying_piece;
 											break;
 										}
 									}					
@@ -149,8 +160,8 @@ public class Game {
 							}
 						}
 						
-						Board.chess_board[b_end_num][b_end_let].occupying_piece = Board.chess_board[b_start_num][b_start_let].occupying_piece;
-						Board.chess_board[b_start_num][b_start_let].occupying_piece = null;
+						Board.chess_board[b_end_x][b_end_y].occupying_piece = Board.chess_board[b_start_x][b_start_y].occupying_piece;
+						Board.chess_board[b_start_x][b_start_y].occupying_piece = null;
 						player1.king_in_check = false;
 						turn++;
 					}
@@ -158,15 +169,15 @@ public class Game {
 					
 				}
 				
-				else if (Board.chess_board[b_start_num][b_start_let].occupying_piece.move_check(Board.chess_board[b_end_num][b_end_let]))
+				else if (Board.chess_board[b_start_x][b_start_y].occupying_piece.move_check(Board.chess_board[b_end_x][b_end_y]))
 				{
-					Board.chess_board[b_start_num][b_start_let].occupying_piece.move(Board.chess_board[b_end_num][b_end_let]);
-					if(Board.chess_board[b_end_num][b_end_let].isOccupied) {	
-						if(Board.chess_board[b_end_num][b_end_let].occupying_piece != null) {
-							if(!Board.chess_board[b_end_num][b_end_let].occupying_piece.color.equals(Board.chess_board[b_start_num][b_start_let].occupying_piece.color)) {										
+					Board.chess_board[b_start_x][b_start_y].occupying_piece.move(Board.chess_board[b_end_x][b_end_y]);
+					if(Board.chess_board[b_end_x][b_end_y].isOccupied) {	
+						if(Board.chess_board[b_end_x][b_end_y].occupying_piece != null) {
+							if(!Board.chess_board[b_end_x][b_end_y].occupying_piece.color.equals(Board.chess_board[b_start_x][b_start_y].occupying_piece.color)) {										
 								for(int i = 0; i < player1.graveyard.length; i++) {				
 									if(player1.graveyard[i] == null) {					
-										player1.graveyard[i] = Board.chess_board[b_end_num][b_end_let].occupying_piece;
+										player1.graveyard[i] = Board.chess_board[b_end_x][b_end_y].occupying_piece;
 										break;
 									}
 								}					
@@ -174,9 +185,9 @@ public class Game {
 						}
 					}
 					
-					Board.chess_board[b_end_num][b_end_let].occupying_piece = Board.chess_board[b_start_num][b_start_let].occupying_piece;
-					Board.chess_board[b_start_num][b_start_let].occupying_piece = null;
-					if (checkForCheck(Board.chess_board[b_end_num][b_end_let].occupying_piece))
+					Board.chess_board[b_end_x][b_end_y].occupying_piece = Board.chess_board[b_start_x][b_start_y].occupying_piece;
+					Board.chess_board[b_start_x][b_start_y].occupying_piece = null;
+					if (checkForCheck(Board.chess_board[b_end_x][b_end_y].occupying_piece))
 					{
 						player1.king_in_check = true;
 					}

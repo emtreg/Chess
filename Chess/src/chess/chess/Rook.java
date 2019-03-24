@@ -1,4 +1,4 @@
-package chess;
+package chess.chess;
 
 public class Rook extends Piece {
 	
@@ -116,7 +116,7 @@ public class Rook extends Piece {
 		{
 			if (Board.chess_board[currentTile.letter_rank][i].isOccupied == false)
 			{
-				reachableTiles[cnt] = Board.chess_board[i][currentTile.number_rank];
+				reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank][i];
 				cnt++;
 			}
 			else
@@ -127,7 +127,7 @@ public class Rook extends Piece {
 				}
 				else
 				{
-					reachableTiles[cnt] = Board.chess_board[i][currentTile.number_rank];
+					reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank][i];
 					cnt++;
 					break;
 				}
@@ -139,7 +139,7 @@ public class Rook extends Piece {
 		{
 			if (Board.chess_board[currentTile.letter_rank][i].isOccupied == false)
 			{
-				reachableTiles[cnt] = Board.chess_board[i][currentTile.number_rank];
+				reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank][i];
 				cnt++;
 			}
 			else
@@ -150,7 +150,7 @@ public class Rook extends Piece {
 				}
 				else
 				{
-					reachableTiles[cnt] = Board.chess_board[i][currentTile.number_rank];
+					reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank][i];
 					cnt++;
 					break;
 				}

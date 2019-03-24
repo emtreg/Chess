@@ -1,4 +1,4 @@
-package chess;
+package chess.chess;
 /*
  * This class creates a Tile object that will makeup the game board
  */

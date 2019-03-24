@@ -1,4 +1,4 @@
-package chess;
+package chess.chess;
 /*This class outlines the methods that the various chess pieces will utilize. All the 
  * individual piece classes will be subclasses of this. 
  */
@@ -21,5 +21,9 @@ public abstract class Piece {
 	public abstract void move(Tile end);
 	
 	public abstract Tile[] possibleMove();
+	
+	public abstract boolean validOutOfCheck(Tile end_tile); //This function checks if moving the king to the end tile will get it out of check.
+	
+	public abstract boolean move_check(Tile end); //This function checks the end tile is in possibleMove() of the start piece.
 
 }

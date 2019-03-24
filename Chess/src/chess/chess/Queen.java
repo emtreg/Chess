@@ -1,4 +1,4 @@
-package chess;
+package chess.chess;
 
 public class Queen extends Piece{
 	
@@ -10,6 +10,16 @@ public class Queen extends Piece{
 		
 		super(currentTile, color);
 		if (color.equals("white")) {tag = "wQ";} else {tag = "bQ";}}
+	
+	public boolean move_check(Tile end)
+	{
+		Tile moves[] = possibleMove();
+		for (int i = 0; i < moves.length; i++){
+			if (end.equals(moves[i]))
+			{return true;}
+		}
+		return false;
+	}
 	
 	public void move(Tile end) {
 		
@@ -31,7 +41,7 @@ public class Queen extends Piece{
 					break;
 				}
 			}
-		}	
+		}
 	}
 	
 	/* if only file changes or only rank changes it is a valid (lateral) move
@@ -194,5 +204,8 @@ public class Queen extends Piece{
 				
 		return reachableTiles;
 	}
+	
+	public boolean validOutOfCheck(Tile end_tile){return true;}
+
 
 }

@@ -1,4 +1,4 @@
-package chess;
+package chess.chess;
 
 public class Bishop extends Piece {
 	
@@ -9,6 +9,16 @@ public class Bishop extends Piece {
 	public Bishop(Tile currentTile, String color) {
 		super(currentTile, color);
 		if(color.equals("white")) {tag = "wB";} else {tag = "bB";}}
+	
+	public boolean move_check(Tile end)
+	{
+		Tile moves[] = possibleMove();
+		for (int i = 0; i < moves.length; i++){
+			if (end.equals(moves[i]))
+			{return true;}
+		}
+		return false;
+	}
 	
 	//check if it is a valid move then check that the end tile is currently reachable
 	//by the piece. If so, update the currentTile to the end tile.
@@ -143,5 +153,7 @@ public class Bishop extends Piece {
 		
 		return possibleMoves;
 	}
+	
+	public boolean validOutOfCheck(Tile end_tile){return true;}
 	
 }

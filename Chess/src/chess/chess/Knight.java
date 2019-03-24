@@ -1,4 +1,4 @@
-package chess;
+package chess.chess;
 
 public class Knight extends Piece{
 	
@@ -10,6 +10,16 @@ public class Knight extends Piece{
 	public Knight(Tile currentTile, String color) {
 		super(currentTile, color);
 		if (color.equals("white")) {tag = "wN";} else {tag = "bN";}}
+	
+	public boolean move_check(Tile end)
+	{
+		Tile moves[] = possibleMove();
+		for (int i = 0; i < moves.length; i++){
+			if (end.equals(moves[i]))
+			{return true;}
+		}
+		return false;
+	}
 	
 	public void move(Tile end) {
 		
@@ -176,4 +186,7 @@ public class Knight extends Piece{
 					
 		return reachableTiles;
 	}
+	
+	public boolean validOutOfCheck(Tile end_tile){return true;}
+
 }

@@ -1,4 +1,4 @@
-package chess;
+package chess.chess;
 
 public class King extends Piece{
 	
@@ -11,6 +11,16 @@ public class King extends Piece{
 		
 		super(currentTile, color);
 		if (color.equals("white")) {tag = "wK";} else {tag = "bK";}}
+	
+	public boolean move_check(Tile end)
+	{
+		Tile moves[] = possibleMove();
+		for (int i = 0; i < moves.length; i++){
+			if (end.equals(moves[i]))
+			{return true;}
+		}
+		return false;
+	}
 
 	public void move(Tile end) {
 		
@@ -25,7 +35,7 @@ public class King extends Piece{
 			if(end_x - start_x == 2 
 				|| start_x - end_x == 2) {
 				
-				return;
+				return;	//Is this for castling?
 				
 			} else {
 			
@@ -219,6 +229,22 @@ public class King extends Piece{
 		}
 			
 		return reachableTiles;
+	}
+	
+	public boolean validOutOfCheck(Tile end_tile)
+	{
+		for (int i = 0; i < 8; i++){ //traverse the board 
+			for (int j = 0; j < 8; j++){
+				if (!Board.chess_board[i][j].color.equals(color)){ //if the piece is an enemy piece, check the piece's possible move array and see if the proposed move is in it
+				for (int k = 0; k < Board.chess_board[i][j].occupying_piece.possibleMove().length; k++){
+					if (Board.chess_board[i][j].occupying_piece.possibleMove()[k].equals(end_tile))
+					{ //if the proposed move is in one of these possibleMove arrays, it will not get the king out of check
+						return false;
+					}
+				}}
+			}
+		}
+		return true;
 	}
 
 }

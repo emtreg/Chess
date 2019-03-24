@@ -1,4 +1,4 @@
-package chess.chess;
+package chess;
 /* This class creates and prints out the game board */
 
 public class Board {

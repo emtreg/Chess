@@ -1,9 +1,9 @@
-package chess.chess;
+package chess;
 
 public class Pawn extends Piece{
 	
-	String pieceType = "pawn";
-	boolean firstMove = true;
+	//String pieceType = "pawn";
+	//boolean first_move = true;
 	
 	public Pawn(Tile currentTile, String color)
 	{
@@ -12,6 +12,9 @@ public class Pawn extends Piece{
 		{	tag = "wp";}
 		else
 		{	tag = "bp";}
+		
+		pieceType = "pawn";
+		first_move = true;
 	}
 	
 	public boolean move_check(Tile end)
@@ -56,30 +59,30 @@ public class Pawn extends Piece{
 	public boolean isValidPath(Tile start, Tile end)
 	{
 		//If it is a white pawn's first move they can go two or one spaces ahead
-		if ((firstMove == true) && color.equals("white") && ((start.letter_rank - end.letter_rank) == 2)
+		if ((first_move == true) && color.equals("white") && ((start.letter_rank - end.letter_rank) == 2)
 				|| ((start.letter_rank - end.letter_rank) == 1) && start.number_rank == end.number_rank && end.isOccupied == false)
 		{
-			//firstMove = false;
+			//first_move = false;
 			return true;
 		}
 		
 		//If it is a black pawn's first move they can go two or one spaces ahead
-		if ((firstMove == true) && (color.equals("white") == false) && ((end.letter_rank - start.letter_rank) == 2) 
+		if ((first_move == true) && (color.equals("white") == false) && ((end.letter_rank - start.letter_rank) == 2) 
 				|| ((end.letter_rank - start.letter_rank) == 1) && start.number_rank == end.number_rank && end.isOccupied == false)
 		{
-			//firstMove = false;
+			//first_move = false;
 			return true;
 		}
 		
 		//If it is not a white pawn's first move they can go one space ahead
-		if ((firstMove == false) && color.equals("white") && ((start.letter_rank - end.letter_rank) == 1) && 
+		if ((first_move == false) && color.equals("white") && ((start.letter_rank - end.letter_rank) == 1) && 
 				start.number_rank == end.number_rank && end.isOccupied == false)
 		{
 			return true;
 		}
 		
 		//If it is not a black pawn's first move they can go one space ahead
-		if ((firstMove == false) && (color.equals("white") == false) && ((end.letter_rank - start.letter_rank) == 1) && 
+		if ((first_move == false) && (color.equals("white") == false) && ((end.letter_rank - start.letter_rank) == 1) && 
 				start.number_rank == end.number_rank && end.isOccupied == false)
 		{
 			return true;
@@ -91,7 +94,7 @@ public class Pawn extends Piece{
 		{
 			if (end.isOccupied == true && end.occupying_piece.color.equals("white") == false)
 			{
-				if (firstMove == true){firstMove=false;}
+				if (first_move == true){first_move=false;}
 				return true;
 			}
 		}
@@ -102,7 +105,7 @@ public class Pawn extends Piece{
 		{
 			if (end.isOccupied == true && end.occupying_piece.color.equals("white"))
 			{
-				if (firstMove == true){firstMove=false;}
+				if (first_move == true){first_move=false;}
 				return true;
 			}
 		}
@@ -126,14 +129,14 @@ public class Pawn extends Piece{
 			}}
 			
 			if (currentTile.letter_rank - 2 >= 0)
-			{if (firstMove == true)
+			{if (first_move == true)
 			{
 				if (Board.chess_board[currentTile.letter_rank - 2][currentTile.number_rank].isOccupied == false)
 			
 				{
 					reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank - 2][currentTile.number_rank];
 					cnt++;
-					firstMove = false;
+					first_move = false;
 				}
 			}}
 			
@@ -171,14 +174,14 @@ public class Pawn extends Piece{
 			}}
 			
 			if (currentTile.letter_rank + 2 <= 7)
-			{if (firstMove == true)
+			{if (first_move == true)
 			{
 				if (Board.chess_board[currentTile.letter_rank + 2][currentTile.number_rank].isOccupied == false)
 			
 				{
 					reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank + 2][currentTile.number_rank];
 					cnt++;
-					firstMove = false;
+					first_move = false;
 				}
 			}}
 			

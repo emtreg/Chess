@@ -1,14 +1,16 @@
-package chess.chess;
+package chess;
 
 public class Rook extends Piece {
 	
-	String pieceType = "rook";
-	boolean first_move = true;
+	//String pieceType = "rook";
+	//boolean first_move = true;
 	
 	public Rook(Tile currentTile, String color)
 	{
 		super(currentTile, color);
 		if (color.equals("white")){tag = "wR";} else {tag = "bR";}
+		pieceType = "rook";
+		first_move = true;
 	}
 	
 	public boolean move_check(Tile end)

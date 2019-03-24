@@ -1,16 +1,18 @@
-package chess.chess;
+package chess;
 
 public class King extends Piece{
 	
-	String pieceType = "king";
+	//String pieceType = "king";
 	
 	static final int maxMoves = 8;
-	boolean first_move = true;
+	//boolean first_move = true;
 	
 	public King(Tile currentTile, String color) {
 		
 		super(currentTile, color);
-		if (color.equals("white")) {tag = "wK";} else {tag = "bK";}}
+		if (color.equals("white")) {tag = "wK";} else {tag = "bK";}
+		pieceType = "king";
+		first_move = true;}
 	
 	public boolean move_check(Tile end)
 	{

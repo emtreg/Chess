@@ -1,14 +1,16 @@
-package chess.chess;
+package chess;
 
 public class Bishop extends Piece {
 	
 	static final int maxMoves = 13;
 	
-	String pieceType = "bishop";
+	//String pieceType = "bishop";
 
 	public Bishop(Tile currentTile, String color) {
 		super(currentTile, color);
-		if(color.equals("white")) {tag = "wB";} else {tag = "bB";}}
+		if(color.equals("white")) {tag = "wB";} else {tag = "bB";}
+		pieceType = "bishop";
+	}
 	
 	public boolean move_check(Tile end)
 	{

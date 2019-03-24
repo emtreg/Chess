@@ -1,15 +1,17 @@
-package chess.chess;
+package chess;
 
 public class Knight extends Piece{
 	
 	static final int maxMoves = 8;
 	
-	String pieceType = "knight";
+	//String pieceType = "knight";
 	
 	
 	public Knight(Tile currentTile, String color) {
 		super(currentTile, color);
-		if (color.equals("white")) {tag = "wN";} else {tag = "bN";}}
+		if (color.equals("white")) {tag = "wN";} else {tag = "bN";}
+		pieceType = "knight";
+	}
 	
 	public boolean move_check(Tile end)
 	{

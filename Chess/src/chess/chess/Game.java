@@ -1,4 +1,4 @@
-package chess.chess;
+package chess;
 import java.util.Scanner;
 
 /* This is the main class that executes the flow of the game */
@@ -38,6 +38,8 @@ public class Game {
 				int w_end_let = Tile.translateLetterToInt(input.substring(2, 3));
 				int w_end_num = Integer.parseInt(input.substring(3, 4));
 				w_end_num = 7 - (w_end_num-1);
+				
+				//System.out.println(Board.chess_board[0][1].occupying_piece.pieceType);
 				
 				if (player1.king_in_check) //Check if player1's king is in check
 				{
@@ -101,7 +103,7 @@ public class Game {
 				else
 				{
 					System.out.println("Move invalid, enter new move");
-				}
+				}				
 
 				Board.makeBoard();			
 			}
@@ -216,11 +218,16 @@ public class Game {
 		for (int i = 0; i < moves.length; i++){
 			if (moves[i] != null)
 			{
+								
 				Tile t = Board.chess_board[moves[i].letter_rank][moves[i].number_rank];
-				if (t.occupying_piece.pieceType.equals("king") == true 
-					&& p.color.equals(t.occupying_piece.color) == false)
-				{
-					return true;
+				
+				if(t.isOccupied) 
+				{					
+					if (t.occupying_piece.pieceType.equals("king") == true 
+						&& p.color.equals(t.occupying_piece.color) == false)
+					{
+						return true;
+					}				
 				}
 			}
 		}

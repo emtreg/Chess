@@ -1,4 +1,4 @@
-package chess.chess;
+package chess;
 import java.util.Scanner;
 
 /* This is the main class that executes the flow of the game */
@@ -39,16 +39,6 @@ public class Game {
 				int w_end_x = Integer.parseInt(input.substring(3, 4));
 				w_end_x = 7 - (w_end_x-1);
 				
-				//System.out.println(Board.chess_board[0][1].occupying_piece.pieceType);
-				/*Board.chess_board[1][3].isOccupied = false; Board.chess_board[1][5].isOccupied = false; //Board.chess_board[1][4].isOccupied = false;
-				Board.chess_board[1][3].occupying_piece = null; Board.chess_board[1][5].occupying_piece = null; //Board.chess_board[1][4].occupying_piece = null;
-				for (int i = 0; i < Board.chess_board[0][4].occupying_piece.possibleMove().length; i++)
-				{
-					if (Board.chess_board[0][4].occupying_piece.possibleMove()[i] != null)
-					{
-						System.out.println(Board.chess_board[0][4].occupying_piece.possibleMove()[i].letter_rank + " ," + Board.chess_board[0][4].occupying_piece.possibleMove()[i].number_rank);
-					}
-				}*/
 				
 				if (player1.king_in_check) //Check if player1's king is in check
 				{
@@ -84,11 +74,133 @@ public class Game {
 					}
 					else {System.out.println("Will not get you out of check, enter new move");} //If move will not get king out of check, do another move
 					
-				}
+				} 
 				
-				else if (Board.chess_board[w_start_x][w_start_y].occupying_piece.move_check(Board.chess_board[w_end_x][w_end_y])) //check if end tile for non-king piece is in possibleMove()
-				{
+				else if (Board.chess_board[w_start_x][w_start_y].occupying_piece.move_check(Board.chess_board[w_end_x][w_end_y])) { //check if end tile for non-king piece is in possibleMove()
+					
+					//check if eligible for pawn promotion
+					
+					if (Board.chess_board[w_start_x][w_start_y].occupying_piece.pieceType.equals("pawn") && w_end_x == 0 && player1.graveyard[0] != null) {					
+						System.out.println("Eligible for pawn promotion. Would you like to promote this pawn? (Y/N): ");
+						
+						input = scan.nextLine();
+						input = input.trim();
+						input = input.replaceAll(" ", "");
+						
+						while (!input.equals("Y") && !input.equals("N")) {
+							
+							System.out.println("Invalid input. Enter 'Y' (yes) or 'N' (no): ");
+							
+							input = scan.nextLine();
+							input = input.trim();
+							input = input.replaceAll(" ", "");							
+						}
+						
+						//If enters 'N', move pawn and go to next turn
+								
+						if (input.equals("N")) {							
+							Board.chess_board[w_start_x][w_start_y].occupying_piece.move(Board.chess_board[w_end_x][w_end_y]);
+						
+							if(Board.chess_board[w_end_x][w_end_y].isOccupied) {	
+								if(Board.chess_board[w_end_x][w_end_y].occupying_piece != null) {
+									if(!Board.chess_board[w_end_x][w_end_y].occupying_piece.color.equals(Board.chess_board[w_start_x][w_start_y].occupying_piece.color)) {										
+										for(int i = 0; i < player2.graveyard.length; i++) {				
+											if(player2.graveyard[i] == null) {					
+												player2.graveyard[i] = Board.chess_board[w_end_x][w_end_y].occupying_piece;
+												break;
+											}
+										}					
+									} 
+								}
+							}
+							
+							Board.chess_board[w_end_x][w_end_y].occupying_piece = Board.chess_board[w_start_x][w_start_y].occupying_piece;
+							Board.chess_board[w_start_x][w_start_y].occupying_piece = null;
+							if (checkForCheck(Board.chess_board[w_end_x][w_end_y].occupying_piece)) //After moving the piece, check if the enemy's king is in the piece's possibleMove()
+							{
+								player2.king_in_check = true;
+							}
+							turn++;
+							
+							//If enters 'Y', have user enter name of piece they wish to swap in for pawn
+						
+						} else if (input.equals("Y")) {							
+							boolean match_found = false;
+							
+							while (match_found == false ) {						
+								System.out.println("Enter name of piece you wish to promote pawn to ('queen', 'knight', 'bishop', 'rook'): ");
+								
+								input = scan.nextLine();
+								input = input.trim();
+								input = input.replaceAll(" ", "");
+						
+								if (input.equals("queen") || input.equals("knight") || input.equals("bishop") || input.equals("rook")) {
+									
+									//Search player's graveyard for first instance of piece
+									
+									for (int i = 0; i < player1.graveyard.length; i++) {
+										
+										if (player1.graveyard[i] != null) {
+										
+											if (input.equals(player1.graveyard[i].pieceType)) {
+												
+												//if matching piece found, swap pawn with piece in graveyard and break out of loop
+											
+												Piece temp = player1.graveyard[i];
+												
+												player1.graveyard[i] = Board.chess_board[w_start_x][w_start_y].occupying_piece;
+												
+												if(Board.chess_board[w_end_x][w_end_y].isOccupied) {	
+													if(Board.chess_board[w_end_x][w_end_y].occupying_piece != null) {
+														if(!Board.chess_board[w_end_x][w_end_y].occupying_piece.color.equals(Board.chess_board[w_start_x][w_start_y].occupying_piece.color)) {										
+															for(int j = 0; j < player2.graveyard.length; j++) {				
+																if(player2.graveyard[j] == null) {					
+																	player2.graveyard[j] = Board.chess_board[w_end_x][w_end_y].occupying_piece;
+																	break;
+																}
+															}					
+														} 
+													}
+												}
+												
+												Board.chess_board[w_start_x][w_start_y].isOccupied = false;
+												Board.chess_board[w_start_x][w_start_y].occupying_piece = null;
+												Board.chess_board[w_end_x][w_end_y].isOccupied = true;
+												Board.chess_board[w_end_x][w_end_y].occupying_piece = temp;
+												Board.chess_board[w_end_x][w_end_y].occupying_piece.currentTile = Board.chess_board[w_end_x][w_end_y];
+												
+												match_found = true;						
+												break;												
+											}									
+										}
+									}
+									
+									//if no match found in graveyard, notify user and have them re-enter piece name
+									
+									if (match_found == false) {										
+										System.out.println("Piece not found in graveyard.");
+										
+									} else {
+										
+										if (checkForCheck(Board.chess_board[w_end_x][w_end_y].occupying_piece)) { //After moving the piece, check if the enemy's king is in the piece's possibleMove()
+											player2.king_in_check = true;
+										}
+										
+										turn++;							
+									}
+									
+								//have user re-enter piece name if it is invalid
+									
+								} else {									
+									System.out.println("Invalid piece name.");
+								}
+							}		
+						} 
+						
+					} else {
+					
 					Board.chess_board[w_start_x][w_start_y].occupying_piece.move(Board.chess_board[w_end_x][w_end_y]);
+					
 					if(Board.chess_board[w_end_x][w_end_y].isOccupied) {	
 						if(Board.chess_board[w_end_x][w_end_y].occupying_piece != null) {
 							if(!Board.chess_board[w_end_x][w_end_y].occupying_piece.color.equals(Board.chess_board[w_start_x][w_start_y].occupying_piece.color)) {										
@@ -109,7 +221,10 @@ public class Game {
 						player2.king_in_check = true;
 					}
 					turn++;
+					
+					}
 				}
+							
 				else
 				{
 					System.out.println("Move invalid, enter new move");
@@ -171,6 +286,128 @@ public class Game {
 				
 				else if (Board.chess_board[b_start_x][b_start_y].occupying_piece.move_check(Board.chess_board[b_end_x][b_end_y]))
 				{
+					
+					//check if eligible for pawn promotion
+					
+					if (Board.chess_board[b_start_x][b_start_y].occupying_piece.pieceType.equals("pawn") && b_end_x == 7 && player2.graveyard[0] != null) {					
+						System.out.println("Eligible for pawn promotion. Would you like to promote this pawn? (Y/N): ");
+						
+						input = scan.nextLine();
+						input = input.trim();
+						input = input.replaceAll(" ", "");
+						
+						while (!input.equals("Y") && !input.equals("N")) {
+							
+							System.out.println("Invalid input. Enter 'Y' (yes) or 'N' (no): ");
+							
+							input = scan.nextLine();
+							input = input.trim();
+							input = input.replaceAll(" ", "");							
+						}
+						
+						//If enters 'N', move pawn and go to next turn
+								
+						if (input.equals("N")) {							
+							Board.chess_board[b_start_x][b_start_y].occupying_piece.move(Board.chess_board[b_end_x][b_end_y]);
+						
+							if(Board.chess_board[b_end_x][b_end_y].isOccupied) {	
+								if(Board.chess_board[b_end_x][b_end_y].occupying_piece != null) {
+									if(!Board.chess_board[b_end_x][b_end_y].occupying_piece.color.equals(Board.chess_board[b_start_x][b_start_y].occupying_piece.color)) {										
+										for(int i = 0; i < player1.graveyard.length; i++) {				
+											if(player1.graveyard[i] == null) {					
+												player1.graveyard[i] = Board.chess_board[b_end_x][b_end_y].occupying_piece;
+												break;
+											}
+										}					
+									} 
+								}
+							}
+							
+							Board.chess_board[b_end_x][b_end_y].occupying_piece = Board.chess_board[b_start_x][b_start_y].occupying_piece;
+							Board.chess_board[b_start_x][b_start_y].occupying_piece = null;
+							if (checkForCheck(Board.chess_board[b_end_x][b_end_y].occupying_piece)) //After moving the piece, check if the enemy's king is in the piece's possibleMove()
+							{
+								player1.king_in_check = true;
+							}
+							turn++;
+							
+							//If enters 'Y', have user enter name of piece they wish to swap in for pawn
+						
+						} else if (input.equals("Y")) {							
+							boolean match_found = false;
+							
+							while (match_found == false ) {						
+								System.out.println("Enter name of piece you wish to promote pawn to ('queen', 'knight', 'bishop', 'rook'): ");
+								
+								input = scan.nextLine();
+								input = input.trim();
+								input = input.replaceAll(" ", "");
+						
+								if (input.equals("queen") || input.equals("knight") || input.equals("bishop") || input.equals("rook")) {
+									
+									//Search player's graveyard for first instance of piece
+									
+									for (int i = 0; i < player2.graveyard.length; i++) {
+										
+										if (player2.graveyard[i] != null) {
+										
+											if (input.equals(player2.graveyard[i].pieceType)) {
+												
+												//if matching piece found, swap pawn with piece in graveyard and break out of loop
+											
+												Piece temp = player2.graveyard[i];
+												
+												player2.graveyard[i] = Board.chess_board[b_start_x][b_start_y].occupying_piece;
+												
+												if(Board.chess_board[b_end_x][b_end_y].isOccupied) {	
+													if(Board.chess_board[b_end_x][b_end_y].occupying_piece != null) {
+														if(!Board.chess_board[b_end_x][b_end_y].occupying_piece.color.equals(Board.chess_board[b_start_x][b_start_y].occupying_piece.color)) {										
+															for(int j = 0; j < player1.graveyard.length; j++) {				
+																if(player1.graveyard[j] == null) {					
+																	player1.graveyard[j] = Board.chess_board[b_end_x][b_end_y].occupying_piece;
+																	break;
+																}
+															}					
+														} 
+													}
+												}
+												
+												Board.chess_board[b_start_x][b_start_y].isOccupied = false;
+												Board.chess_board[b_start_x][b_start_y].occupying_piece = null;
+												Board.chess_board[b_end_x][b_end_y].isOccupied = true;
+												Board.chess_board[b_end_x][b_end_y].occupying_piece = temp;
+												Board.chess_board[b_end_x][b_end_y].occupying_piece.currentTile = Board.chess_board[b_end_x][b_end_y];
+												
+												match_found = true;						
+												break;												
+											}									
+										}
+									}
+									
+									//if no match found in graveyard, notify user and have them re-enter piece name
+									
+									if (match_found == false) {										
+										System.out.println("Piece not found in graveyard.");
+										
+									} else {
+										
+										if (checkForCheck(Board.chess_board[b_end_x][b_end_y].occupying_piece)) { //After moving the piece, check if the enemy's king is in the piece's possibleMove()
+											player1.king_in_check = true;
+										}
+										
+										turn++;							
+									}
+									
+								//have user re-enter piece name if it is invalid
+									
+								} else {									
+									System.out.println("Invalid piece name.");
+								}
+							}		
+						} 
+						
+					} else {
+						
 					Board.chess_board[b_start_x][b_start_y].occupying_piece.move(Board.chess_board[b_end_x][b_end_y]);
 					if(Board.chess_board[b_end_x][b_end_y].isOccupied) {	
 						if(Board.chess_board[b_end_x][b_end_y].occupying_piece != null) {
@@ -193,6 +430,7 @@ public class Game {
 					}
 					turn++;
 				}
+			}
 				else
 				{
 					System.out.println("Move invalid, enter new move");
@@ -212,10 +450,10 @@ public class Game {
 		{
 			if (king.possibleMove()[i] != null)
 			{ //if there is a single possible move, return false, not a checkmate
-				if (king.validOutOfCheck(king.possibleMove()[i]) == true)
-				{
+				//if (king.validOutOfCheck(king.possibleMove()[i]) == true)
+				//{
 					return false;
-				}
+				//}
 			}
 		}
 		return true; //otherwise, there exists no valid move which means checkmate
@@ -230,7 +468,7 @@ public class Game {
 			if (moves[i] != null)
 			{
 								
-				Tile t = Board.chess_board[moves[i].letter_rank][moves[i].number_rank];
+				Tile t = Board.chess_board[moves[i].number_rank][moves[i].letter_rank];
 				
 				if(t.isOccupied) 
 				{					
@@ -244,5 +482,72 @@ public class Game {
 		}
 		return false;
 	}
+	
+	
+	/*
+		
+		
+		//if end tile would put white pawn in 8th rank
+		
+		
+				
+			
+					
+					//go through pieces in white player's graveyard and find first matching piece
+					
+					
+							
+							
+						} 
+						
+						if(match_found == false) {
+							
+							while(match_found == false) {
+								
+								System.out.println("Requested piece not found in graveyard. Please select another piece: ");
+								
+								input = scan.nextline();
+								input = input.trim();
+								input = input.replaceAll(" ", "");
+								
+								
+							}
+							
+							//while there is no match in player1's graveyard
+							
+							
+							
+							
+						}
+					
+					}
+				}
+				
+				while(!input.equals("king") && !input.equals("queen") && !input.equals("knight") && !input.equals("bishop") && !input.equals("rook") && !input.equals("pawn")) {
+					
+					System.out.println("Invalid piece name. Please re-enter: ");
+					input = scan.nextline();
+					input = input.trim();
+					input = input.replaceAll(" ", "");				
+				}
+				
+			} else {
+				
+				while(!input.equals("Y") && !input.equals("N")) {
+					
+					System.out.println("Invalid input. Please enter 'Y' for yes or 'N' for no");
+					input = scan.nextline();
+					input = input.trim();
+					input = input.replaceAll(" ", "");
+					
+				}
+			}
+			
+			
+		}
+		
+	}
+	
+	*/
 	
 }

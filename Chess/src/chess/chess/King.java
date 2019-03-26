@@ -1,4 +1,4 @@
-package chess.chess;
+package chess;
 
 public class King extends Piece{
 	
@@ -89,24 +89,6 @@ public class King extends Piece{
 		}
 		
 		return false;
-	}
-	
-	/*helper method for possibleMoves, checks occupation status/occupying piece color and adds tile to
-	 * reachableTiles array if move is valid */
-	
-	public void checkTile(int file, int rank, int count, Tile[] reachableTiles) {
-		
-		if(Board.chess_board[file][rank].isOccupied == true) {		
-			if(!Board.chess_board[file][rank].occupying_piece.color.equals(color)) {				
-				
-				reachableTiles[count] = Board.chess_board[file][rank];
-				count++;
-			}			
-		} else {			
-			reachableTiles[count] = Board.chess_board[file][rank];
-			count++;		
-		}
-	
 	}
 
 	public Tile[] possibleMove() {
@@ -241,7 +223,7 @@ public class King extends Piece{
 			{
 				if (Board.chess_board[i][j].isOccupied)
 				{
-					if (!(Board.chess_board[i][j].color.equals(color)))
+					if (!(Board.chess_board[i][j].occupying_piece.color.equals(color)))
 					{ //if the piece is an enemy piece, check the piece's possible move array and see if the proposed move is in it
 						for (int k = 0; k < Board.chess_board[i][j].occupying_piece.possibleMove().length; k++)
 						{

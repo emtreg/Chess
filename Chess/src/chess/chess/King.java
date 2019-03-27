@@ -34,29 +34,22 @@ public class King extends Piece{
 		if (isValidPath(Board.chess_board[start_x][start_y], Board.chess_board[end_x][end_y]) == true)
 		{
 			
-			if(end_x - start_x == 2 
-				|| start_x - end_x == 2) {
-				
-				return;	//Is this for castling?
-				
-			} else {
+			Tile moves[] = possibleMove();
 			
-				Tile moves[] = possibleMove();
+			for (int i = 0; i < moves.length; i++) {
 				
-				for (int i = 0; i < moves.length; i++) {
+				if (end.equals(moves[i])) {
 					
-					if (end.equals(moves[i])) {
-						
-						Board.chess_board[end_x][end_y].isOccupied = true;
-						Board.chess_board[start_x][start_y].isOccupied = false;
-						currentTile = end;
-						first_move = false;
-						break;
-					}
+					Board.chess_board[end_x][end_y].isOccupied = true;
+					Board.chess_board[start_x][start_y].isOccupied = false;
+					currentTile = end;
+					first_move = false;
+					break;
 				}
 			}
-		}	
-	}
+		}
+	}	
+	
 	
 	/*if:
 	 *file and rank both increase/decrease by one or
@@ -209,7 +202,7 @@ public class King extends Piece{
 			} else {			
 				reachableTiles[count] = Board.chess_board[x-1][y+1];
 				count++;		
-			}	
+			}		
 		}
 			
 		return reachableTiles;

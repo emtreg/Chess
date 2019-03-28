@@ -1,12 +1,23 @@
 package chess;
-/* This class creates and prints out the game board */
+
+/** The Board class represents a board object
+ * it creates and prints out the game board
+ * 
+ *  @author Justin Saganowski
+ *  @author Emily Tregelles
+ *  */
+
 
 public class Board {
 	
-	/* A 2d Tile array is created to represent the game board. The board is then 
+	/** A 2d Tile array is created to represent the game board. The board is then 
 	   printed out according to the assignment specification */
 	
 	static Tile chess_board[][] = new Tile[8][8];
+	
+	/** the initialBoard method populates the board with both players' pieces
+	 * @return nothing
+	 */
 	
 	public static void initialBoard()
 	{
@@ -16,7 +27,7 @@ public class Board {
 			{
 				chess_board[i][j] = new Tile(i, j);
 				
-				//Initialize white pieces
+				/**Initialize white pieces*/
 				
 				if (i == 6) 
 				{
@@ -49,7 +60,7 @@ public class Board {
 					chess_board[i][j].occupying_piece = new King(chess_board[i][j], "white");
 				}
 				
-				//Initialize black pieces
+				/**Initialize black pieces*/
 				
 				else if (i == 1) 
 				{
@@ -84,6 +95,10 @@ public class Board {
 			}
 		}
 	}
+	
+	/** The makeBoard method prints out the game board
+	 * @return nothing
+	 */
 	
 	public static void makeBoard()
 	{

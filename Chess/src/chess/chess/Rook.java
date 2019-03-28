@@ -1,9 +1,17 @@
 package chess;
 
+/** The Rook class represents a rook object
+ * 
+ *  @author Justin Saganowski
+ *  @author Emily Tregelles
+ *  */
+
 public class Rook extends Piece {
 	
-	//String pieceType = "rook";
-	//boolean first_move = true;
+	/** constructor for Rook object
+	 * @param currentTile tile where piece is currently positioned
+	 * @param color color of piece
+	 */
 	
 	public Rook(Tile currentTile, String color)
 	{
@@ -12,6 +20,11 @@ public class Rook extends Piece {
 		pieceType = "rook";
 		first_move = true;
 	}
+	
+	/** The move_check method determines if a move is legal
+	 * @param end destination tile
+	 * @return boolean
+	 */
 	
 	public boolean move_check(Tile end)
 	{
@@ -23,8 +36,12 @@ public class Rook extends Piece {
 		return false;
 	}
 	
-	//check if it is a valid move then check that the end tile is currently reachable
-	//by the piece. If so, update the currentTile to the end tile.
+	/** The move method checks if it is a valid move and that the end tile is currently reachable 
+	 * by the piece. If so, update the currentTile to the end tile.
+	 * @param end tile destination tile
+	 * @return void
+	 */
+	
 	public void move(Tile end)
 	{
 		int end_x = end.letter_rank;
@@ -49,7 +66,13 @@ public class Rook extends Piece {
 		}
 	}
 	
-	//If one of the ranks is the same between start to end, it is a valid move.
+	/** The isValidPath method checks if the rook is moving laterally
+	 * If one of the ranks is the same between start to end, it is a valid move
+	 * @param start tile where piece is currently located
+	 * @param end destination tile of piece
+	 * @return boolean
+	 */
+	
 	public boolean isValidPath(Tile start, Tile end)
 	{
 		if ((start.number_rank != end.number_rank) && (start.letter_rank != end.letter_rank))
@@ -62,12 +85,17 @@ public class Rook extends Piece {
 		}
 	}
 	
+	/** The possibleMove method determines which locations on the board can be legally reached by the piece
+	 * @return array of tiles that piece can legally move to
+	 */
+	
 	public Tile[] possibleMove()
 	{
 		int cnt = 0;
 		Tile[] reachableTiles = new Tile[20];
 				
-		//First check forward tiles
+		/**First check forward tiles*/
+		
 		for (int i = currentTile.letter_rank+1; i < 8; i++)
 		{
 			if (Board.chess_board[i][currentTile.number_rank].isOccupied == false)
@@ -88,7 +116,8 @@ public class Rook extends Piece {
 			}
 		}
 		
-		//Then check backward tiles
+		/**Then check backward tiles*/
+		
 		for (int i = currentTile.letter_rank-1; i >= 0; i--)
 		{
 			if (Board.chess_board[i][currentTile.number_rank].isOccupied == false)
@@ -111,7 +140,8 @@ public class Rook extends Piece {
 			}
 		}
 		
-		//Then check right tiles
+		/**Then check right tiles*/
+		
 		for (int i = currentTile.number_rank+1; i < 8; i++)
 		{
 			if (Board.chess_board[currentTile.letter_rank][i].isOccupied == false)
@@ -134,7 +164,8 @@ public class Rook extends Piece {
 			}
 		}
 		
-		//Finally check left tiles
+		/**Finally check left tiles*/
+		
 		for (int i = currentTile.number_rank-1; i >= 0; i--)
 		{
 			if (Board.chess_board[currentTile.letter_rank][i].isOccupied == false)
@@ -156,10 +187,6 @@ public class Rook extends Piece {
 				}
 			}
 		}
-		
-		/*for (int i = 0; i < cnt; i++){System.out.print(reachableTiles[i].letter_rank
-				+ "," + reachableTiles[i].number_rank + "\t");}
-		System.out.println("\n");*/
 		
 		return reachableTiles;
 	}

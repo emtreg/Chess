@@ -1,8 +1,17 @@
 package chess;
 
-import java.util.Scanner;
+/** The Pawn class represents a pawn object
+ * 
+ *  @author Justin Saganowski
+ *  @author Emily Tregelles
+ *  */
 
 public class Pawn extends Piece{
+	
+	/** constructor for Pawn object
+	 * @param currentTile tile where piece is currently positioned
+	 * @param color color of piece
+	 */
 	
 	public Pawn(Tile currentTile, String color)
 	{
@@ -14,6 +23,11 @@ public class Pawn extends Piece{
 		first_move = true;
 	}
 	
+	/** The move_check method determines if a move is legal
+	 * @param end destination tile
+	 * @return boolean
+	 */
+	
 	public boolean move_check(Tile end)
 	{
 		Tile moves[] = possibleMove();
@@ -23,6 +37,12 @@ public class Pawn extends Piece{
 		}
 		return false;
 	}
+	
+	/** The move method checks if it is a valid move and that the end tile is currently reachable 
+	 * by the piece. If so, update the currentTile to the end tile.
+	 * @param end tile destination tile
+	 * @return nothing
+	 */
 	
 	public void move(Tile end)
 	{
@@ -48,69 +68,77 @@ public class Pawn extends Piece{
 		}
 	}
 	
+	/** The isValidPath method checks if the pawn is moving one space forward or two spaces forward if on its first move
+	 * or if pawn is moving one space diagonally to capture an enemy piece
+	 * @param start tile where piece is currently located
+	 * @param end destination tile of piece
+	 * @return boolean
+	 */
+	
 	public boolean isValidPath(Tile start, Tile end)
 	{
-		//If it is a white pawn's first move they can go two or one spaces ahead
+		/**If it is a white pawn's first move they can go two or one spaces ahead*/
 		if ((first_move == true) && color.equals("white") && ((start.letter_rank - end.letter_rank) == 2)
 				|| ((start.letter_rank - end.letter_rank) == 1) && start.number_rank == end.number_rank && end.isOccupied == false)
 		{
-			//first_move = false;
 			return true;
 		}
 		
-		//If it is a black pawn's first move they can go two or one spaces ahead
+		/**If it is a black pawn's first move they can go two or one spaces ahead*/
 		if ((first_move == true) && (color.equals("white") == false) && ((end.letter_rank - start.letter_rank) == 2) 
 				|| ((end.letter_rank - start.letter_rank) == 1) && start.number_rank == end.number_rank && end.isOccupied == false)
 		{
-			//first_move = false;
 			return true;
 		}
 		
-		//If it is not a white pawn's first move they can go one space ahead
+		/**If it is not a white pawn's first move they can go one space ahead*/
 		if ((first_move == false) && color.equals("white") && ((start.letter_rank - end.letter_rank) == 1) && 
 				start.number_rank == end.number_rank && end.isOccupied == false)
 		{
 			return true;
 		}
 		
-		//If it is not a black pawn's first move they can go one space ahead
+		/**If it is not a black pawn's first move they can go one space ahead*/
 		if ((first_move == false) && (color.equals("white") == false) && ((end.letter_rank - start.letter_rank) == 1) && 
 				start.number_rank == end.number_rank && end.isOccupied == false)
 		{
 			return true;
 		}
 		
-		//If a there is an enemy piece in one of two forward diagonal spaces, a white pawn can take that piece and move there.
+		/**If a there is an enemy piece in one of two forward diagonal spaces, a white pawn can take that piece and move there*/
 		if (color.equals("white") && ((start.letter_rank - end.letter_rank) == 1) && 
 				(((start.number_rank - end.number_rank) == 1) || ((end.number_rank - start.number_rank) == 1)))
 		{
 			if (end.isOccupied == true && end.occupying_piece.color.equals("white") == false)
 			{
-				//if (first_move == true){first_move=false;}
 				return true;
 			}
 		}
 		
-		//If there is an enemy piece in one of two forward diagonal spaces, a black pawn can take that piece and move there.
+		/**If there is an enemy piece in one of two forward diagonal spaces, a black pawn can take that piece and move there*/
 		if ((!(color.equals("white"))) && ((end.letter_rank - start.letter_rank) == 1) &&
 				((start.number_rank - end.number_rank) == 1) || ((end.number_rank - start.number_rank) == 1))
 		{
 			if (end.isOccupied == true && end.occupying_piece.color.equals("white"))
 			{
-				//if (first_move == true){first_move=false;}
 				return true;
 			}
 		}
 		
 		return false;
 	}
+	
+	/** The possibleMove method determines which locations on the board can be legally reached by the piece
+	 * @return array of tiles that piece can legally move to
+	 */
 
 	public Tile[] possibleMove()
 	{
 		Tile[] reachableTiles = new Tile[4];
 		int cnt = 0;
 		
-		//White pieces first
+		/**White pieces first*/
+		
 		if (color.equals("white"))
 		{
 			if (currentTile.letter_rank - 1 >= 0)
@@ -128,7 +156,6 @@ public class Pawn extends Piece{
 				{
 					reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank - 2][currentTile.number_rank];
 					cnt++;
-					//first_move = false;
 				}
 			}}
 			
@@ -155,7 +182,8 @@ public class Pawn extends Piece{
 			}
 		}
 		
-		//Now for the black pieces
+		/**Now for the black pieces*/
+		
 		else if (color.equals("white") == false)
 		{
 			if (currentTile.letter_rank + 1 <= 7)
@@ -173,7 +201,6 @@ public class Pawn extends Piece{
 				{
 					reachableTiles[cnt] = Board.chess_board[currentTile.letter_rank + 2][currentTile.number_rank];
 					cnt++;
-					//first_move = false;
 				}
 			}}
 			
@@ -199,9 +226,6 @@ public class Pawn extends Piece{
 				}
 			}
 		}
-		
-		//for (int i = 0; i < cnt; i++){System.out.print(reachableTiles[i].letter_rank + ", " + reachableTiles[i].number_rank + "\t");}
-		//System.out.print("\n");
 		
 		return reachableTiles;
 	}

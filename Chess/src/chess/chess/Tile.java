@@ -1,18 +1,29 @@
 package chess;
-/*
- * This class creates a Tile object that will makeup the game board
- */
+
+/** The Tile class represents a tile object
+ * 
+ *  @author Justin Saganowski
+ *  @author Emily Tregelles
+ *  */
 
 public class Tile {
 	
-	/*Each Tile has a color, coordinates that indicate where it is on the board,
+	/**Each Tile has a color, coordinates that indicate where it is on the board,
 	 * and what (if any) chess piece currently occupies the tile */
+	
 	public String color;
 	public int number_rank, letter_rank;
 	public Piece occupying_piece;
 	
-	//isOccupied states if a Piece is currently on the Tile. False is the default.
+	/**isOccupied states if a Piece is currently on the Tile. False is the default*/
+	
 	public boolean isOccupied = false;
+	
+
+	/** constructor for Tile object
+	 * @param letter_rank tile file
+	 * @param number_rank tile rank
+	 */
 	
 	public Tile(int letter_rank, int number_rank)
 	{
@@ -21,7 +32,11 @@ public class Tile {
 		color = assignColor(translateIntToLetter(letter_rank), number_rank);
 	}
 	   
-	//This method maps the integer coordinate to a letter, return '?' on error.
+	/**The translateIntToLetter method maps the integer coordinate to a letter
+	 * @param let tile file
+	 * @return corresponding letter or '?' on error
+	 * */
+	
 	public String translateIntToLetter(int let)
 	{
 		if (let == 0){return("a");}
@@ -35,7 +50,11 @@ public class Tile {
 		else{return("?");}
 	}
 	
-	//This method maps the letter coordinate to an integer
+	/**The translateLetterToInt method maps the letter coordinate to an integer
+	 * @param num tile rank
+	 * @return corresponding number or -1 on error
+	 * */
+	
 	public static int translateLetterToInt(String num)
 	{
 		if (num.equals("a")){return(0);}
@@ -49,7 +68,13 @@ public class Tile {
 		else{return(-1);}
 	}
 	
-	//This method determines what color each tile is based on board coordinates
+	
+	/**The assignColor method determines what color each tile is based on board coordinates
+	 * @param let_rank tile file
+	 * @param num_rank tile rank
+	 * @return tile color
+	 * */
+	
 	public String assignColor(String let_rank, int num_rank)
 	{
 		if (let_rank.equals("a") || let_rank.equals("c") || let_rank.equals("e") || 
@@ -77,16 +102,25 @@ public class Tile {
 		}
 	}
 	
-	//These are setter and getter methods for the occupying chess piece
-	// (I think I can delete these actually because occupying_piece is public)
+	
+	/**The setOccupyingPiece method sets the occupying piece of a tile
+	 * @param occupying_piece piece to be set to
+	 * @return nothing
+	 * */
+	
 	public void setOccupyingPiece(Piece occupying_piece)
 	{
 		this.occupying_piece = occupying_piece;
 	}
 	
+	/**The getOccupyingPiece method gets the occupying piece of a tile
+	 * @return occupying piece* 
+	 * */
+	
 	public Piece getOccupyingPiece()
 	{
 		return(occupying_piece);
 	}
-
+	
+	
 }

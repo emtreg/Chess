@@ -1,11 +1,19 @@
 package chess;
 
+/** The King class represents a king object
+ * 
+ *  @author Justin Saganowski
+ *  @author Emily Tregelles
+ *  */
+
 public class King extends Piece{
 	
-	//String pieceType = "king";
+	/** constructor for King object
+	 * @param currentTile tile where piece is currently positioned
+	 * @param color color of piece
+	 */
 	
 	static final int maxMoves = 8;
-	//boolean first_move = true;
 	
 	public King(Tile currentTile, String color) {
 		
@@ -13,6 +21,12 @@ public class King extends Piece{
 		if (color.equals("white")) {tag = "wK";} else {tag = "bK";}
 		pieceType = "king";
 		first_move = true;}
+	
+	
+	/** The move_check method determines if a move is legal
+	 * @param end destination tile
+	 * @return boolean
+	 */
 	
 	public boolean move_check(Tile end)
 	{
@@ -23,6 +37,13 @@ public class King extends Piece{
 		}
 		return false;
 	}
+	
+
+	/** The move method checks if it is a valid move and that the end tile is currently reachable 
+	 * by the piece. If so, update the currentTile to the end tile.
+	 * @param end tile destination tile
+	 * @return nothing
+	 */
 
 	public void move(Tile end) {
 		
@@ -50,15 +71,20 @@ public class King extends Piece{
 		}
 	}	
 	
-	
-	/*if:
+
+	/** The isValidPath method checks if the king is moving one space either laterally or diagonally
+	 *if:
 	 *file and rank both increase/decrease by one or
 	 *only file increases/decreases by one or
 	 *only rank increases/decreases by one or
 	 *file decreases by one and rank increases by one or
 	 *file increases by one and rank decreases by one 
 	 *the move is valid (moves one either laterally or diagonally)
-	 **/
+	 * @param start tile where piece is currently located
+	 * @param end destination tile of piece
+	 * @return boolean
+	 */
+	
 	
 	public boolean isValidPath(Tile start, Tile end) {
 		
@@ -83,6 +109,10 @@ public class King extends Piece{
 		
 		return false;
 	}
+	
+	/** The possibleMove method determines which locations on the board can be legally reached by the piece
+	 * @return array of tiles that piece can legally move to
+	 */
 
 	public Tile[] possibleMove() {
 		
@@ -208,22 +238,28 @@ public class King extends Piece{
 		return reachableTiles;
 	}
 	
+	/**
+	   * The validOutOfCheck method checks if moving a king to the specified tile will successfully get it out of check
+	   * @param end_tile end tile of king piece
+	   * @return boolean
+	   */
+	
 	public boolean validOutOfCheck(Tile end_tile)
 	{
 		for (int i = 0; i < 8; i++)
-		{ //traverse the board 
+		{ /**traverse the board*/
 			for (int j = 0; j < 8; j++)
 			{
 				if (Board.chess_board[i][j].isOccupied)
 				{
 					if (!(Board.chess_board[i][j].occupying_piece.color.equals(color)))
-					{ //if the piece is an enemy piece, check the piece's possible move array and see if the proposed move is in it
+					{ /**if the piece is an enemy piece, check the piece's possible move array and see if the proposed move is in it*/
 						for (int k = 0; k < Board.chess_board[i][j].occupying_piece.possibleMove().length; k++)
 						{
 							if (Board.chess_board[i][j].occupying_piece.possibleMove()[k] != null)
 							{
 								if (Board.chess_board[i][j].occupying_piece.possibleMove()[k].equals(end_tile))
-								{ //if the proposed move is in one of these possibleMove arrays, it will not get the king out of check
+								{ /**if the proposed move is in one of these possibleMove arrays, it will not get the king out of check*/
 									return false;
 								}
 							}
